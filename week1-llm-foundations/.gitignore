@@ -1,0 +1,8 @@
+# secrets — your class key lives here; never commit it
+.env
+.claude/settings.local.json
+
+# python
+.venv/
+__pycache__/
+*.pyc

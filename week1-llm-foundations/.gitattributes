@@ -1,0 +1,3 @@
+# Keep the launchers runnable whatever a learner's git line-ending settings are.
+*.cmd text eol=crlf
+*.sh  text eol=lf

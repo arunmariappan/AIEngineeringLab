@@ -1,0 +1,13 @@
+[project]
+name = "week1-llm-foundations"
+version = "0.1.0"
+description = "AI Engineering Programme - Week 1 labs"
+requires-python = ">=3.10"
+# Keep in step with requirements.txt (the pip fallback).
+dependencies = [
+    "anthropic>=2.6,<3",
+    "python-dotenv>=1.0",
+]
+
+[tool.uv]
+package = false   # a folder of lab scripts, not an installable package

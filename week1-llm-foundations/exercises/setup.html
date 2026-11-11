@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 1 setup</title><style>
+:root{--ink:#0D1B2A;--muted:#5B6B7A;--teal:#00808A;--teal-g:#00A9B5;--gold:#9A6700;--gold-g:#E3A81B;
+--coral:#B4432F;--rule:#D9E0E6;--band:#F2F7F8;--code:#F1F4F6;--ph-bg:#FFE97A;--ph-fg:#6B4500;--bg:#FFFFFF}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Calibri,"Segoe UI",system-ui,-apple-system,sans-serif}
+body[data-os="win"] .mac-only,body[data-os="mac"] .win-only{display:none}
+.wrap{max-width:880px;margin:0 auto;padding:28px 16px 72px}
+.top{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);border-bottom:1px solid var(--rule)}
+.top .in{max-width:880px;margin:0 auto;padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.brand{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--teal);text-transform:uppercase;margin-right:auto}
+.progress{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.progress a{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--teal);display:inline-block}
+.progress a.on{background:var(--teal)}
+.progress a.stretch{border-style:dashed}
+.ptext{font-size:13px;color:var(--muted);min-width:84px}
+.os{display:inline-flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden}
+.os button{border:0;background:none;padding:4px 12px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer}
+.os button[aria-pressed="true"]{background:var(--teal);color:#fff}
+.rule{width:44px;height:4px;background:var(--teal-g);margin:18px 0 12px}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.16em;color:var(--teal);text-transform:uppercase}
+h1{font:400 38px/1.15 Georgia,"Times New Roman",serif;margin:6px 0 10px}
+h2{font:400 26px/1.2 Georgia,serif;margin:44px 0 12px}
+h3{font:700 19px/1.3 Georgia,serif;margin:0}
+.lede{font-size:19px;color:var(--muted);margin:0 0 18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 22px;padding:0;list-style:none;font-size:15px}
+.meta b{color:var(--teal);font-weight:700;letter-spacing:.06em;font-size:12px;text-transform:uppercase;margin-right:6px}
+.notice{border-left:5px solid var(--gold-g);background:var(--band);padding:14px 18px;margin:18px 0}
+.notice .lab{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.notice .big{font:400 26px/1.25 Georgia,serif;color:var(--teal);margin:4px 0}
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.step{border:1px solid var(--rule);padding:18px 20px 16px 20px;margin:14px 0;position:relative;scroll-margin-top:70px}
+.step.done{border-left:5px solid var(--teal-g);padding-left:16px}
+.step.done h3{color:var(--muted)}
+.step.stretch{border-style:dashed}
+.head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;font:700 15px/30px Calibri,"Segoe UI",system-ui,sans-serif;text-align:center}
+.step.stretch .num{background:#fff;color:var(--teal);border:1.5px dashed var(--teal);line-height:27px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:1px 8px;margin-left:4px}
+.donebox{margin-left:auto;font-size:14px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer;white-space:nowrap}
+.donebox input{width:18px;height:18px;accent-color:var(--teal)}
+.step p{margin:8px 0}
+.block{border:1px solid var(--rule);background:var(--code);margin:10px 0}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 4px 12px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);letter-spacing:.06em}
+.copy{border:1px solid var(--rule);background:#fff;border-radius:4px;font:inherit;font-size:12px;padding:2px 10px;cursor:pointer;color:var(--teal)}
+.copy.copied{background:var(--teal);color:#fff;border-color:var(--teal)}
+pre{margin:0;padding:12px 14px;overflow-x:auto;font:14.5px/1.5 Consolas,"SF Mono",Menlo,monospace;white-space:pre}
+pre.wrap{white-space:pre-wrap;overflow-wrap:anywhere}
+code{font-family:Consolas,"SF Mono",Menlo,monospace;font-size:.92em;background:var(--code);padding:1px 4px}
+pre code{background:none;padding:0;font-size:inherit}
+.expected{background:var(--band);border-left:4px solid var(--teal-g);padding:8px 14px;margin:12px 0 2px;font-size:15.5px}
+.expected .lbl{display:block;font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--teal);text-transform:uppercase}
+.ph{background:var(--ph-bg);color:var(--ph-fg);font-weight:700;padding:0 3px}
+.warn{color:var(--coral);font-weight:700}
+table.rec{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}
+table.rec th{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule)}
+table.rec td{padding:4px 8px;border-bottom:1px solid var(--rule)}
+table.rec input{width:100%;font:inherit;border:1px solid var(--rule);padding:4px 6px}
+details{border:1px solid var(--rule);margin:8px 0;padding:0 14px}
+details summary{cursor:pointer;padding:10px 0;font-weight:700}
+details[open]{padding-bottom:10px}
+details.answer{border-style:dashed}
+.next{margin-top:36px;padding:14px 18px;border:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.next .links{white-space:nowrap;margin-left:auto}
+.brand a{color:inherit;text-decoration:none}
+table.rec td.when{white-space:nowrap;color:var(--muted);width:1%}
+.box{border:1px solid var(--rule);padding:12px 18px;margin:16px 0}
+.box h3{margin-bottom:6px}
+.box ul{margin:6px 0;padding-left:22px}
+a{color:var(--teal)}
+footer{margin-top:48px;padding-top:12px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer button{border:1px solid var(--rule);background:#fff;font:inherit;font-size:13px;padding:3px 10px;cursor:pointer;color:var(--muted)}
+@media (max-width:600px){h1{font-size:30px}.step{padding:14px}.donebox span{display:none}}
+@media print{.top,.copy,footer button,.os{display:none}.step{break-inside:avoid}body[data-os] .win-only,body[data-os] .mac-only{display:block}}
+</style></head>
+<body data-guide="aie-w1-setup" data-os="win">
+<div class="top"><div class="in"><span class="brand"><a href="index.html">AI Engineering · Week 1</a> · Setup</span>
+<span class="progress"><span class="ptext"></span></span>
+<span class="os" role="group" aria-label="Your computer"><button type="button" value="win">Windows</button><button type="button" value="mac">macOS</button></span></div></div>
+<main class="wrap">
+<div class="rule"></div><div class="kicker">Week 1 · Before Saturday</div>
+<h1>Set up your laptop</h1><p class="lede">About 40 minutes, once. On Saturday we start typing at 10:23, so everything here has to work before you arrive.</p>
+<ul class="meta"><li><b>Finish by</b>Wednesday 11 November, before the smoke test</li><li><b>You need</b>your laptop, your GitHub login and your class key</li><li><b>Stuck?</b>note the step number and the exact error, then post it in <b>the cohort WhatsApp group</b></li></ul>
+<p>Work top to bottom and tick each step as you finish it. The switch at the top shows commands for <b>Windows</b> or <b>macOS</b>. Steps 1–11 are needed on Saturday; step 12 is for Week 4, but it's quicker to do it now.</p>
+
+
+<ol class="steps"><li class="step" id="laptop"><div class="head"><span class="num">1</span><h3>Check your laptop</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>You need <b>Windows 10 (version 1809 or later) or 11</b>, or <b>macOS 13 or later</b>, with <b>8 GB of RAM</b> or more.</p><p><b>Bringing a work laptop?</b> Two things often get in the way: installs that need IT approval, and a VPN or proxy that blocks the AI services. If either applies, bring a personal laptop if you can. If you can't, tell us now and we'll set you up on GitHub Codespaces, which runs in the browser.</p><div class="expected"><span class="lbl">Expected</span>You know which laptop you'll bring, and that you can install software on it.</div></li><li class="step" id="git"><div class="head"><span class="num">2</span><h3>Install Git</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p class="win-only">Download the 64-bit installer from <a href="https://git-scm.com/downloads/win">git-scm.com/downloads/win</a> and run it with every option left at its default. It also gives Claude Code a Bash shell to work in.</p><p class="mac-only">macOS ships Git with Apple's command-line tools. Run the check below; if macOS offers to install the tools, accept, wait, and run it again.</p><p>Open a <b>new</b> terminal and check it:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>git --version</code></pre></div><p>Then tell Git who you are. It writes this on every commit:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>git config --global user.name &quot;Your Name&quot;
+git config --global user.email &quot;you@example.com&quot;</code></pre></div><div class="expected"><span class="lbl">Expected</span><code>git version 2.…</code>, and the two config commands print nothing.</div></li><li class="step" id="github"><div class="head"><span class="num">3</span><h3>Sign in to GitHub</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Sign in at <a href="https://github.com">github.com</a>, or create a free account. The same account gives you GitHub Copilot (step 11) and Codespaces, our fallback if a laptop fails on the day.</p><div class="expected"><span class="lbl">Expected</span>You can sign in to github.com.</div></li><li class="step" id="uv"><div class="head"><span class="num">4</span><h3>Install uv</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>uv runs our Python labs. It creates each project's environment and installs packages in seconds, and it <b>fetches Python by itself</b> if your laptop doesn't have a suitable version. No separate Python installer needed.</p><div class="block win-only"><div class="bar"><span>PowerShell</span><button class="copy" type="button">Copy</button></div><pre><code>powershell -ExecutionPolicy ByPass -c &quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</code></pre></div><div class="block mac-only"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>curl -LsSf https://astral.sh/uv/install.sh | sh</code></pre></div><p>Close the terminal, open a new one, and check:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv --version</code></pre></div><div class="expected"><span class="lbl">Expected</span><code>uv 0.…</code> with a version number.</div></li><li class="step" id="vscode"><div class="head"><span class="num">5</span><h3>Install VS Code and the Python extension</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Download VS Code from <a href="https://code.visualstudio.com">code.visualstudio.com</a> and install it with the defaults.</p><p class="mac-only">To use <code>code</code> in the terminal: open VS Code, press <b>Cmd+Shift+P</b> and run <i>Shell Command: Install 'code' command in PATH</i>.</p><p class="win-only">In VS Code open <b>Extensions</b> (<b>Ctrl+Shift+X</b>), search <b>Python</b>, and install the one published by Microsoft.</p><p class="mac-only">In VS Code open <b>Extensions</b> (<b>Cmd+Shift+X</b>), search <b>Python</b>, and install the one published by Microsoft.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>code --version</code></pre></div><div class="expected"><span class="lbl">Expected</span>A version number. The Python extension shows as installed.</div></li><li class="step" id="repo"><div class="head"><span class="num">6</span><h3>Get the Week 1 repo</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Clone the course repo into a folder you'll find again. It has one folder per week; today you work in <code>week1-llm-foundations</code>. The address is <code>https://github.com/arunmariappan/AIEngineeringLab.git</code>.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>git clone https://github.com/arunmariappan/AIEngineeringLab.git
+cd AIEngineeringLab/week1-llm-foundations
+code .</code></pre></div><div class="expected"><span class="lbl">Expected</span>VS Code opens the folder, and the Explorer shows <code>lab1_first_call.py</code>, <code>README.md</code> and <code>claude-class.cmd</code>.</div></li><li class="step" id="key"><div class="head"><span class="num">7</span><h3>Add your class key</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>In VS Code open <b>Terminal › New Terminal</b>. It opens in the repo folder. Make your own copy of the settings file:</p><div class="block win-only"><div class="bar"><span>PowerShell</span><button class="copy" type="button">Copy</button></div><pre><code>copy .env.example .env</code></pre></div><div class="block mac-only"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>cp .env.example .env</code></pre></div><p>Open <code>.env</code> and replace <code>sk-ant-REPLACE_ME</code> with the class key Arun sent you. No quotes, no spaces. It's <b>your own key</b>: it works in class and for homework until Week 6, inside the cohort's spending limit.</p><p><span class="warn">Your key is like a password.</span> Never commit it, paste it in a chat, or put it in code. The repo already tells Git to ignore <code>.env</code>. Check:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>git status</code></pre></div><div class="expected"><span class="lbl">Expected</span><code>.env</code> holds your key, and <code>git status</code> does <b>not</b> list <code>.env</code>.</div></li><li class="step" id="smoke"><div class="head"><span class="num">8</span><h3>Smoke test: your first call</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>This is the same script we start Lab 1 with. The first run takes a minute while uv sets up the environment.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run lab1_first_call.py</code></pre></div><div class="expected"><span class="lbl">Expected</span><code>### Part 1</code> followed by three runs, each a different coffee-shop tagline, then <code>### Part 2</code> with three <code>effort=</code> lines. It costs a fraction of a cent on the class key.</div></li><li class="step" id="claude"><div class="head"><span class="num">9</span><h3>Install Claude Code</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Claude Code is the AI coding agent we use from Saturday's build segment onward. Install it as yourself; you don't need admin rights.</p><div class="block win-only"><div class="bar"><span>PowerShell</span><button class="copy" type="button">Copy</button></div><pre><code>irm https://claude.ai/install.ps1 | iex</code></pre></div><div class="block mac-only"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre></div><p>Open a new terminal and check the install. <code>claude doctor</code> runs a health check without starting a session:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>claude --version
+claude doctor</code></pre></div><div class="expected"><span class="lbl">Expected</span>A version number like <code>2.… (Claude Code)</code>, and <code>claude doctor</code> reports no errors.</div></li><li class="step" id="claudekey"><div class="head"><span class="num">10</span><h3>Run Claude Code on the class key</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>In class, Claude Code runs on <b>your class key</b> and the course model, <b>Haiku 5.5</b>, so you don't need a Claude subscription. The repo has a small launcher that does this. It reads your <code>.env</code>, never prints your key, and <b>changes nothing in your own Claude Code setup</b>. Run it from the repo folder:</p><div class="block win-only"><div class="bar"><span>PowerShell</span><button class="copy" type="button">Copy</button></div><pre><code>.\claude-class.cmd</code></pre></div><div class="block mac-only"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>bash claude-class.sh</code></pre></div><p>If it asks whether to use the API key it found, choose <b>Yes</b>. Then ask it something about the repo, check which credential it's using, and leave:</p><div class="block"><div class="bar"><span>Inside Claude Code</span></div><pre><code>In one sentence, what does lab1_first_call.py do?
+/status
+/exit</code></pre></div><p>Already use Claude Code at work or with your own plan? Plain <code>claude</code> still starts on your own account; only the launcher uses the class key.</p><div class="expected"><span class="lbl">Expected</span>A one-sentence answer about the lab. <code>/status</code> shows an <b>API key</b> or <b>auth token</b> from the environment, not your personal login.</div></li><li class="step" id="copilot"><div class="head"><span class="num">11</span><h3>Add GitHub Copilot</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>On Saturday you'll compare Claude Code with Copilot side by side. In VS Code open <b>Extensions</b>, search <b>GitHub Copilot</b>, install it, and sign in with GitHub when it asks. The <b>Copilot Free</b> plan is enough. If your employer gives you Copilot, that works too.</p><div class="expected"><span class="lbl">Expected</span>The Copilot icon in VS Code's status bar shows you're signed in.</div></li><li class="step" id="node"><div class="head"><span class="num">12</span><h3>Install Node.js (for Week 4)</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Week 4 connects tools through MCP, and several of those tools run on Node.js. Download the <b>LTS</b> installer from <a href="https://nodejs.org/en/download">nodejs.org/en/download</a> and run it with the defaults. If it asks for an administrator password you don't have, cancel; it can wait until Week 4.</p><div class="block win-only"><div class="bar"><span>PowerShell</span><button class="copy" type="button">Copy</button></div><pre><code>node --version
+npx.cmd --version</code></pre></div><div class="block mac-only"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>node --version
+npx --version</code></pre></div><div class="expected"><span class="lbl">Expected</span><code>v24.…</code> or <code>v26.…</code> (both are LTS), and an npx version number.</div></li><li class="step" id="send"><div class="head"><span class="num">13</span><h3>Tell us you're ready</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Take a screenshot of this page with every tick done (the dots at the top) and post it in <b>the cohort WhatsApp group</b>. If a step failed, post the step number and the exact error text instead. We'll fix it before Saturday.</p><div class="expected"><span class="lbl">Expected</span>You've posted your screenshot, or your error.</div></li></ol>
+<h2>If something goes wrong</h2><details><summary>“not recognized” or “command not found” for git, uv, code or claude</summary><p>Close <b>every</b> terminal, and VS Code, then open a new one. Installers only update new windows.</p><p class="win-only">Still failing for <code>uv</code> or <code>claude</code>? Both install into your <code>.local\bin</code> folder. Add it to your PATH, then open a new terminal:</p><p class="mac-only">Still failing for <code>uv</code> or <code>claude</code>? Both install into <code>~/.local/bin</code>. Add it to your PATH:</p><div class="block win-only"><div class="bar"><span>PowerShell</span><button class="copy" type="button">Copy</button></div><pre><code>[Environment]::SetEnvironmentVariable(&quot;PATH&quot;, &quot;$env:PATH;$env:USERPROFILE\.local\bin&quot;, &quot;User&quot;)</code></pre></div><div class="block mac-only"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>echo &#x27;export PATH=&quot;$HOME/.local/bin:$PATH&quot;&#x27; &gt;&gt; ~/.zshrc
+source ~/.zshrc</code></pre></div></details><details><summary>“running scripts is disabled on this system” (PowerShell)</summary><p>Windows is blocking a script. Use the commands exactly as shown above: the uv installer runs with <code>-ExecutionPolicy ByPass</code>, and on Windows we call <code>npx.cmd</code>, not <code>npx</code>. The class launcher is a <code>.cmd</code> file, so it isn't affected.</p></details><details><summary>AuthenticationError … 401 … invalid x-api-key</summary><p>The key in <code>.env</code> is missing or wrong. Check it still doesn't say <code>sk-ant-REPLACE_ME</code>, and that there are no quotes or spaces around it. Save the file and run the command again.</p></details><details><summary>Timeouts, “connection refused”, or SSL/certificate errors</summary><p>Usually a work VPN, proxy or firewall. Try once off the VPN or on a home or phone network. If that works, the network is the problem: post in the cohort chat and we'll plan a Codespace for you on Saturday.</p></details><details><summary>uv can't download Python</summary><p>Behind some networks uv can't fetch Python itself. Install Python 3.12 from <a href="https://www.python.org/downloads/">python.org</a> (on Windows tick <b>Add Python to PATH</b>), then run the smoke test again.</p></details><details><summary>Claude Code asks you to log in instead of using the key</summary><p>You probably started plain <code>claude</code>. Start it with the launcher from the repo folder instead (step 10). If it still ignores the key, run <code>/config</code> inside Claude Code and switch on <b>Use custom API key</b>.</p></details><details><summary>“No .env file here” from the launcher</summary><p>You're in the wrong folder, or you skipped step 7. Run <code>cd AIEngineeringLab/week1-llm-foundations</code> and check that <code>.env</code> is there.</p></details><details><summary>The Node.js installer asks for an administrator password</summary><p>Cancel it and skip step 12 for now. On a work laptop, ask IT for <b>Node.js LTS (x64)</b>. You need it by Week 4, not Saturday.</p></details><details><summary>Copilot says you don't have access</summary><p>Your employer's GitHub settings may block it. That's fine: Claude Code (step 10) is enough for Saturday.</p></details>
+
+<div class="next"><span><b>All ticked?</b> See you Saturday at 10:00 sharp, with your laptop charged.</span><span class="links"><a href="index.html">Week 1 home</a> · <a href="lab1-first-call.html"><b>Preview Lab 1 →</b></a></span></div>
+<footer><span>AI Engineering Programme · Week 1 · Setup. Your ticks and notes stay in this browser only.</span>
+<button type="button" class="reset">Reset this page</button></footer>
+</main><script>
+(function(){
+  var KEY=document.body.getAttribute('data-guide');
+  function load(k,f){try{var v=localStorage.getItem(KEY+':'+k);return v===null?f:JSON.parse(v);}catch(e){return f;}}
+  function save(k,v){try{localStorage.setItem(KEY+':'+k,JSON.stringify(v));}catch(e){}}
+  // Windows / macOS
+  var plat=(navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent;
+  var detected=/mac|iphone|ipad/i.test(plat)?'mac':'win';
+  var osBtns=document.querySelectorAll('.os button');
+  function setOS(os){document.body.setAttribute('data-os',os);osBtns.forEach(function(b){b.setAttribute('aria-pressed',String(b.value===os));});save('os',os);}
+  osBtns.forEach(function(b){b.addEventListener('click',function(){setOS(b.value);});});
+  setOS(load('os',detected));
+  // copy buttons
+  function copyText(t){
+    if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
+    return new Promise(function(res,rej){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();try{document.execCommand('copy')?res():rej();}catch(e){rej(e);}document.body.removeChild(ta);});
+  }
+  document.querySelectorAll('.block').forEach(function(b){
+    var btn=b.querySelector('.copy'),pre=b.querySelector('pre');if(!btn||!pre)return;
+    btn.addEventListener('click',function(){copyText(pre.textContent.replace(/\n+$/,'')).then(function(){
+      btn.textContent='Copied';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied');},1500);
+    },function(){btn.textContent='Select and copy';});});
+  });
+  // step ticks + progress
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  var done=load('done',{});
+  var ptext=document.querySelector('.ptext'),dots=document.querySelector('.progress');
+  var core=steps.filter(function(s){return !s.classList.contains('stretch');});
+  var links=steps.map(function(s){var a=document.createElement('a');a.href='#'+s.id;a.title=s.querySelector('h3').textContent;
+    if(s.classList.contains('stretch'))a.className='stretch';dots.insertBefore(a,ptext);return a;});
+  function paint(){
+    var n=0;steps.forEach(function(s,i){var on=!!done[s.id];s.classList.toggle('done',on);s.querySelector('.donebox input').checked=on;
+      links[i].classList.toggle('on',on);if(on&&!s.classList.contains('stretch'))n++;});
+    ptext.textContent=n+' of '+core.length+' done';
+  }
+  steps.forEach(function(s){s.querySelector('.donebox input').addEventListener('change',function(e){done[s.id]=e.target.checked;save('done',done);paint();});});
+  paint();
+  // note fields
+  document.querySelectorAll('[data-note]').forEach(function(inp){var k='note:'+inp.getAttribute('data-note');inp.value=load(k,'');
+    inp.addEventListener('input',function(){save(k,inp.value);});});
+  // reset
+  var r=document.querySelector('.reset');if(r)r.addEventListener('click',function(){
+    if(!confirm('Clear your ticks and notes on this page?'))return;
+    try{Object.keys(localStorage).forEach(function(k){if(k.indexOf(KEY+':')===0)localStorage.removeItem(k);});}catch(e){}
+    done={};document.querySelectorAll('[data-note]').forEach(function(i){i.value='';});paint();});
+})();
+</script></body></html>

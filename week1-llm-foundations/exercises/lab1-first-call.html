@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 1: first call</title><style>
+:root{--ink:#0D1B2A;--muted:#5B6B7A;--teal:#00808A;--teal-g:#00A9B5;--gold:#9A6700;--gold-g:#E3A81B;
+--coral:#B4432F;--rule:#D9E0E6;--band:#F2F7F8;--code:#F1F4F6;--ph-bg:#FFE97A;--ph-fg:#6B4500;--bg:#FFFFFF}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Calibri,"Segoe UI",system-ui,-apple-system,sans-serif}
+body[data-os="win"] .mac-only,body[data-os="mac"] .win-only{display:none}
+.wrap{max-width:880px;margin:0 auto;padding:28px 16px 72px}
+.top{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);border-bottom:1px solid var(--rule)}
+.top .in{max-width:880px;margin:0 auto;padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.brand{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--teal);text-transform:uppercase;margin-right:auto}
+.progress{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.progress a{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--teal);display:inline-block}
+.progress a.on{background:var(--teal)}
+.progress a.stretch{border-style:dashed}
+.ptext{font-size:13px;color:var(--muted);min-width:84px}
+.os{display:inline-flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden}
+.os button{border:0;background:none;padding:4px 12px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer}
+.os button[aria-pressed="true"]{background:var(--teal);color:#fff}
+.rule{width:44px;height:4px;background:var(--teal-g);margin:18px 0 12px}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.16em;color:var(--teal);text-transform:uppercase}
+h1{font:400 38px/1.15 Georgia,"Times New Roman",serif;margin:6px 0 10px}
+h2{font:400 26px/1.2 Georgia,serif;margin:44px 0 12px}
+h3{font:700 19px/1.3 Georgia,serif;margin:0}
+.lede{font-size:19px;color:var(--muted);margin:0 0 18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 22px;padding:0;list-style:none;font-size:15px}
+.meta b{color:var(--teal);font-weight:700;letter-spacing:.06em;font-size:12px;text-transform:uppercase;margin-right:6px}
+.notice{border-left:5px solid var(--gold-g);background:var(--band);padding:14px 18px;margin:18px 0}
+.notice .lab{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.notice .big{font:400 26px/1.25 Georgia,serif;color:var(--teal);margin:4px 0}
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.step{border:1px solid var(--rule);padding:18px 20px 16px 20px;margin:14px 0;position:relative;scroll-margin-top:70px}
+.step.done{border-left:5px solid var(--teal-g);padding-left:16px}
+.step.done h3{color:var(--muted)}
+.step.stretch{border-style:dashed}
+.head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;font:700 15px/30px Calibri,"Segoe UI",system-ui,sans-serif;text-align:center}
+.step.stretch .num{background:#fff;color:var(--teal);border:1.5px dashed var(--teal);line-height:27px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:1px 8px;margin-left:4px}
+.donebox{margin-left:auto;font-size:14px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer;white-space:nowrap}
+.donebox input{width:18px;height:18px;accent-color:var(--teal)}
+.step p{margin:8px 0}
+.block{border:1px solid var(--rule);background:var(--code);margin:10px 0}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 4px 12px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);letter-spacing:.06em}
+.copy{border:1px solid var(--rule);background:#fff;border-radius:4px;font:inherit;font-size:12px;padding:2px 10px;cursor:pointer;color:var(--teal)}
+.copy.copied{background:var(--teal);color:#fff;border-color:var(--teal)}
+pre{margin:0;padding:12px 14px;overflow-x:auto;font:14.5px/1.5 Consolas,"SF Mono",Menlo,monospace;white-space:pre}
+pre.wrap{white-space:pre-wrap;overflow-wrap:anywhere}
+code{font-family:Consolas,"SF Mono",Menlo,monospace;font-size:.92em;background:var(--code);padding:1px 4px}
+pre code{background:none;padding:0;font-size:inherit}
+.expected{background:var(--band);border-left:4px solid var(--teal-g);padding:8px 14px;margin:12px 0 2px;font-size:15.5px}
+.expected .lbl{display:block;font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--teal);text-transform:uppercase}
+.ph{background:var(--ph-bg);color:var(--ph-fg);font-weight:700;padding:0 3px}
+.warn{color:var(--coral);font-weight:700}
+table.rec{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}
+table.rec th{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule)}
+table.rec td{padding:4px 8px;border-bottom:1px solid var(--rule)}
+table.rec input{width:100%;font:inherit;border:1px solid var(--rule);padding:4px 6px}
+details{border:1px solid var(--rule);margin:8px 0;padding:0 14px}
+details summary{cursor:pointer;padding:10px 0;font-weight:700}
+details[open]{padding-bottom:10px}
+details.answer{border-style:dashed}
+.next{margin-top:36px;padding:14px 18px;border:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.next .links{white-space:nowrap;margin-left:auto}
+.brand a{color:inherit;text-decoration:none}
+table.rec td.when{white-space:nowrap;color:var(--muted);width:1%}
+.box{border:1px solid var(--rule);padding:12px 18px;margin:16px 0}
+.box h3{margin-bottom:6px}
+.box ul{margin:6px 0;padding-left:22px}
+a{color:var(--teal)}
+footer{margin-top:48px;padding-top:12px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer button{border:1px solid var(--rule);background:#fff;font:inherit;font-size:13px;padding:3px 10px;cursor:pointer;color:var(--muted)}
+@media (max-width:600px){h1{font-size:30px}.step{padding:14px}.donebox span{display:none}}
+@media print{.top,.copy,footer button,.os{display:none}.step{break-inside:avoid}body[data-os] .win-only,body[data-os] .mac-only{display:block}}
+</style></head>
+<body data-guide="aie-w1-lab1" data-os="win">
+<div class="top"><div class="in"><span class="brand"><a href="index.html">AI Engineering · Week 1</a> · Lab 1</span>
+<span class="progress"><span class="ptext"></span></span>
+<span class="os" role="group" aria-label="Your computer"><button type="button" value="win">Windows</button><button type="button" value="mac">macOS</button></span></div></div>
+<main class="wrap">
+<div class="rule"></div><div class="kicker">Week 1 · Lab 1 · Hands-on · 20 min</div>
+<h1>Call it, run it three times, turn the knob</h1><p class="lede">Your first LLM call from code. You'll see the same prompt give different answers, and find the one knob this model does give you.</p>
+<ul class="meta"><li><b>When</b>10:23–10:43</li><li><b>File</b><code>lab1_first_call.py</code></li><li><b>Model</b><code>claude-haiku-5-5</code></li></ul>
+
+<div class="notice"><div class="lab">The one thing to notice</div><div class="big">3 runs · 3 answers</div>There's no setting on this model that makes it stop. So from Week 2, we stop eyeballing and start measuring.</div>
+
+<ol class="steps"><li class="step" id="open"><div class="head"><span class="num">1</span><h3>Open the repo and a terminal</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>In VS Code, open the <code>week1-llm-foundations</code> folder, then <b>Terminal › New Terminal</b>.</p><div class="expected"><span class="lbl">Expected</span>The terminal prompt ends in <code>week1-llm-foundations</code>.</div></li><li class="step" id="run"><div class="head"><span class="num">2</span><h3>Run the same prompt three times</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Part 1 of the script asks for a one-sentence tagline for a cold-brew coffee shop, three times, with exactly the same prompt.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run lab1_first_call.py</code></pre></div><p>Before you scroll on: <b>how many different answers did you get?</b> Compare with your neighbour.</p><div class="expected"><span class="lbl">Expected</span>Three different taglines. If two match, run it again; they rarely stay the same.</div></li><li class="step" id="effort"><div class="head"><span class="num">3</span><h3>Turn the knob you do have: effort</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Part 2 asks one question at three effort levels: <code>low</code>, <code>medium</code>, <code>high</code>. Effort sets <b>how hard the model thinks</b>, not how random it is. Write down what you see:</p><table class="rec"><tr><th>effort</th><th>output tokens</th><th>seconds</th><th>answer changed?</th></tr><tr><td><code>low</code></td><td><input data-note="low-tok" inputmode="numeric"></td><td><input data-note="low-sec" inputmode="decimal"></td><td><input data-note="low-ans"></td></tr><tr><td><code>medium</code></td><td><input data-note="medium-tok" inputmode="numeric"></td><td><input data-note="medium-sec" inputmode="decimal"></td><td><input data-note="medium-ans"></td></tr><tr><td><code>high</code></td><td><input data-note="high-tok" inputmode="numeric"></td><td><input data-note="high-sec" inputmode="decimal"></td><td><input data-note="high-ans"></td></tr></table><details class="answer"><summary>Check the arithmetic (try it yourself first)</summary><p>09:40 → 13:15 is 3 h 35 min. Minus the 25-minute stop, the train was moving for <b>3 h 10 min</b>.</p></details><div class="expected"><span class="lbl">Expected</span>Three <code>--- effort=…</code> lines. Output tokens usually rise with effort, because thinking tokens are billed as output. The seconds go up with them.</div></li><li class="step" id="read"><div class="head"><span class="num">4</span><h3>Read how the answer is picked out</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Open <code>lab1_first_call.py</code> and find these two pieces. A response is a <b>list of blocks</b>, not a string. This model thinks by default, so the first block can be a <code>thinking</code> block:</p><div class="block"><div class="bar"><span>lab1_first_call.py</span></div><pre><code>def text_of(message) -&gt; str:
+    &quot;&quot;&quot;A response is a LIST of content blocks, not a string.
+
+    Haiku 5.5 thinks by default, so the first block can be a `thinking`
+    block. Pick the text blocks by their type, never by position.
+    &quot;&quot;&quot;
+    return &quot;&quot;.join(block.text for block in message.content if block.type == &quot;text&quot;)</code></pre></div><p>And <code>max_tokens</code> is one ceiling for thinking <i>and</i> answer together:</p><div class="block"><div class="bar"><span>lab1_first_call.py</span></div><pre><code>message = client.messages.create(
+    model=MODEL,
+    max_tokens=1024,                     # a CEILING for thinking + answer together, not a target
+    output_config={&quot;effort&quot;: effort},    # low | medium | high | xhigh | max
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}],
+)</code></pre></div><div class="expected"><span class="lbl">Expected</span>You can say why <code>message.content[0].text</code> would break on this model.</div></li><li class="step stretch" id="temp"><div class="head"><span class="num">5</span><h3>Try to pin it down</h3><span class="tag">STRETCH</span><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Older models had a <code>temperature</code> dial. Add <code>temperature=0,</code> as a new line inside the <code>client.messages.create(</code> call, save, and run again:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run lab1_first_call.py</code></pre></div><p>Read the error, then take the line out again.</p><div class="expected"><span class="lbl">Expected</span><code>TypeError: Messages.create() got an unexpected keyword argument 'temperature'</code>, raised before anything is sent. On this model you can't opt out of variance.</div></li><li class="step stretch" id="tiny"><div class="head"><span class="num">6</span><h3>Starve it of tokens</h3><span class="tag">STRETCH</span><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Change <code>max_tokens=1024</code> to <code>max_tokens=200</code>, and add <code>message.stop_reason</code> to the Part 2 print line. Run the lab again and look at the <code>effort=high</code> answer. Put 1024 back afterwards.</p><div class="expected"><span class="lbl">Expected</span>At higher effort the answer may come back short or empty, with <code>stop_reason</code> = <code>max_tokens</code>: the thinking used up the budget.</div></li></ol>
+<h2>If something goes wrong</h2><details><summary>AuthenticationError … 401 … invalid x-api-key</summary><p>Your <code>.env</code> still has the placeholder, or the key has quotes or spaces around it. Fix it, save, and run again.</p></details><details><summary>ModuleNotFoundError: No module named 'anthropic'</summary><p>You ran <code>python</code> outside the project's environment. Use <code>uv run lab1_first_call.py</code>, which uses the right environment every time.</p></details><details><summary>RateLimitError (429) or overloaded (529)</summary><p>Ten people are calling at once. Wait 20 seconds and run it again. Nothing is wrong with your code.</p></details><details><summary>A run prints nothing where the answer should be</summary><p>The answer ran out of room after thinking. Check that <code>max_tokens</code> is still 1024.</p></details><details><summary>“uv” is not recognized</summary><p>Go back to the <a href="setup.html#uv">setup page, step 4</a>, then close and reopen VS Code.</p></details>
+
+<div class="next"><span><b>Debrief:</b> effort changed how hard it thought, and what it cost. Nothing changed whether it varies. How do you test something that never answers the same way twice? Week 2.</span><span class="links"><a href="setup.html">← Setup</a> · <a href="index.html">Week 1 home</a> · <a href="minilab-tokens.html"><b>Tokens mini-lab →</b></a></span></div>
+<footer><span>AI Engineering Programme · Week 1 · Lab 1. Your ticks and notes stay in this browser only.</span>
+<button type="button" class="reset">Reset this page</button></footer>
+</main><script>
+(function(){
+  var KEY=document.body.getAttribute('data-guide');
+  function load(k,f){try{var v=localStorage.getItem(KEY+':'+k);return v===null?f:JSON.parse(v);}catch(e){return f;}}
+  function save(k,v){try{localStorage.setItem(KEY+':'+k,JSON.stringify(v));}catch(e){}}
+  // Windows / macOS
+  var plat=(navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent;
+  var detected=/mac|iphone|ipad/i.test(plat)?'mac':'win';
+  var osBtns=document.querySelectorAll('.os button');
+  function setOS(os){document.body.setAttribute('data-os',os);osBtns.forEach(function(b){b.setAttribute('aria-pressed',String(b.value===os));});save('os',os);}
+  osBtns.forEach(function(b){b.addEventListener('click',function(){setOS(b.value);});});
+  setOS(load('os',detected));
+  // copy buttons
+  function copyText(t){
+    if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
+    return new Promise(function(res,rej){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();try{document.execCommand('copy')?res():rej();}catch(e){rej(e);}document.body.removeChild(ta);});
+  }
+  document.querySelectorAll('.block').forEach(function(b){
+    var btn=b.querySelector('.copy'),pre=b.querySelector('pre');if(!btn||!pre)return;
+    btn.addEventListener('click',function(){copyText(pre.textContent.replace(/\n+$/,'')).then(function(){
+      btn.textContent='Copied';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied');},1500);
+    },function(){btn.textContent='Select and copy';});});
+  });
+  // step ticks + progress
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  var done=load('done',{});
+  var ptext=document.querySelector('.ptext'),dots=document.querySelector('.progress');
+  var core=steps.filter(function(s){return !s.classList.contains('stretch');});
+  var links=steps.map(function(s){var a=document.createElement('a');a.href='#'+s.id;a.title=s.querySelector('h3').textContent;
+    if(s.classList.contains('stretch'))a.className='stretch';dots.insertBefore(a,ptext);return a;});
+  function paint(){
+    var n=0;steps.forEach(function(s,i){var on=!!done[s.id];s.classList.toggle('done',on);s.querySelector('.donebox input').checked=on;
+      links[i].classList.toggle('on',on);if(on&&!s.classList.contains('stretch'))n++;});
+    ptext.textContent=n+' of '+core.length+' done';
+  }
+  steps.forEach(function(s){s.querySelector('.donebox input').addEventListener('change',function(e){done[s.id]=e.target.checked;save('done',done);paint();});});
+  paint();
+  // note fields
+  document.querySelectorAll('[data-note]').forEach(function(inp){var k='note:'+inp.getAttribute('data-note');inp.value=load(k,'');
+    inp.addEventListener('input',function(){save(k,inp.value);});});
+  // reset
+  var r=document.querySelector('.reset');if(r)r.addEventListener('click',function(){
+    if(!confirm('Clear your ticks and notes on this page?'))return;
+    try{Object.keys(localStorage).forEach(function(k){if(k.indexOf(KEY+':')===0)localStorage.removeItem(k);});}catch(e){}
+    done={};document.querySelectorAll('[data-note]').forEach(function(i){i.value='';});paint();});
+})();
+</script></body></html>
