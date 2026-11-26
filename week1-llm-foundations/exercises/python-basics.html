@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python from zero</title><style>
+:root{--ink:#0D1B2A;--muted:#5B6B7A;--teal:#00808A;--teal-g:#00A9B5;--gold:#9A6700;--gold-g:#E3A81B;
+--coral:#B4432F;--rule:#D9E0E6;--band:#F2F7F8;--code:#F1F4F6;--ph-bg:#FFE97A;--ph-fg:#6B4500;--bg:#FFFFFF}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Calibri,"Segoe UI",system-ui,-apple-system,sans-serif}
+body[data-os="win"] .mac-only,body[data-os="mac"] .win-only{display:none}
+.wrap{max-width:880px;margin:0 auto;padding:28px 16px 72px}
+.top{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);border-bottom:1px solid var(--rule)}
+.top .in{max-width:880px;margin:0 auto;padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.brand{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--teal);text-transform:uppercase;margin-right:auto}
+.progress{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.progress a{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--teal);display:inline-block}
+.progress a.on{background:var(--teal)}
+.progress a.stretch{border-style:dashed}
+.ptext{font-size:13px;color:var(--muted);min-width:84px}
+.os{display:inline-flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden}
+.os button{border:0;background:none;padding:4px 12px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer}
+.os button[aria-pressed="true"]{background:var(--teal);color:#fff}
+.rule{width:44px;height:4px;background:var(--teal-g);margin:18px 0 12px}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.16em;color:var(--teal);text-transform:uppercase}
+h1{font:400 38px/1.15 Georgia,"Times New Roman",serif;margin:6px 0 10px}
+h2{font:400 26px/1.2 Georgia,serif;margin:44px 0 12px}
+h3{font:700 19px/1.3 Georgia,serif;margin:0}
+.lede{font-size:19px;color:var(--muted);margin:0 0 18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 22px;padding:0;list-style:none;font-size:15px}
+.meta b{color:var(--teal);font-weight:700;letter-spacing:.06em;font-size:12px;text-transform:uppercase;margin-right:6px}
+.notice{border-left:5px solid var(--gold-g);background:var(--band);padding:14px 18px;margin:18px 0}
+.notice .lab{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.notice .big{font:400 26px/1.25 Georgia,serif;color:var(--teal);margin:4px 0}
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.step{border:1px solid var(--rule);padding:18px 20px 16px 20px;margin:14px 0;position:relative;scroll-margin-top:70px}
+.step.done{border-left:5px solid var(--teal-g);padding-left:16px}
+.step.done h3{color:var(--muted)}
+.step.stretch{border-style:dashed}
+.head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;font:700 15px/30px Calibri,"Segoe UI",system-ui,sans-serif;text-align:center}
+.step.stretch .num{background:#fff;color:var(--teal);border:1.5px dashed var(--teal);line-height:27px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:1px 8px;margin-left:4px}
+.donebox{margin-left:auto;font-size:14px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer;white-space:nowrap}
+.donebox input{width:18px;height:18px;accent-color:var(--teal)}
+.step p{margin:8px 0}
+.block{border:1px solid var(--rule);background:var(--code);margin:10px 0}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 4px 12px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);letter-spacing:.06em}
+.copy{border:1px solid var(--rule);background:#fff;border-radius:4px;font:inherit;font-size:12px;padding:2px 10px;cursor:pointer;color:var(--teal)}
+.copy.copied{background:var(--teal);color:#fff;border-color:var(--teal)}
+pre{margin:0;padding:12px 14px;overflow-x:auto;font:14.5px/1.5 Consolas,"SF Mono",Menlo,monospace;white-space:pre}
+pre.wrap{white-space:pre-wrap;overflow-wrap:anywhere}
+code{font-family:Consolas,"SF Mono",Menlo,monospace;font-size:.92em;background:var(--code);padding:1px 4px}
+pre code{background:none;padding:0;font-size:inherit}
+.expected{background:var(--band);border-left:4px solid var(--teal-g);padding:8px 14px;margin:12px 0 2px;font-size:15.5px}
+.expected .lbl{display:block;font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--teal);text-transform:uppercase}
+.ph{background:var(--ph-bg);color:var(--ph-fg);font-weight:700;padding:0 3px}
+.warn{color:var(--coral);font-weight:700}
+table.rec{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}
+table.rec th{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule)}
+table.rec td{padding:4px 8px;border-bottom:1px solid var(--rule)}
+table.rec input{width:100%;font:inherit;border:1px solid var(--rule);padding:4px 6px}
+details{border:1px solid var(--rule);margin:8px 0;padding:0 14px}
+details summary{cursor:pointer;padding:10px 0;font-weight:700}
+details[open]{padding-bottom:10px}
+details.answer{border-style:dashed}
+.next{margin-top:36px;padding:14px 18px;border:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.next .links{white-space:nowrap;margin-left:auto}
+.brand a{color:inherit;text-decoration:none}
+table.rec td.when{white-space:nowrap;color:var(--muted);width:1%}
+.box{border:1px solid var(--rule);padding:12px 18px;margin:16px 0}
+.box h3{margin-bottom:6px}
+.box ul{margin:6px 0;padding-left:22px}
+.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.quick{border-left:5px solid var(--coral)}
+.quick h3{color:var(--coral)}
+.quick li p{margin:6px 0 2px}
+.small{font-size:14.5px;color:var(--muted)}
+.tag.phase{color:var(--muted);border-color:var(--rule)}
+table.rec td code{white-space:nowrap}
+a{color:var(--teal)}
+footer{margin-top:48px;padding-top:12px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer button{border:1px solid var(--rule);background:#fff;font:inherit;font-size:13px;padding:3px 10px;cursor:pointer;color:var(--muted)}
+@media (max-width:600px){h1{font-size:30px}.step{padding:14px}.donebox span{display:none}}
+@media print{.top,.copy,footer button,.os{display:none}.step{break-inside:avoid}body[data-os] .win-only,body[data-os] .mac-only{display:block}}
+</style></head>
+<body data-guide="aie-w1-pybasics" data-os="win">
+<div class="top"><div class="in"><span class="brand"><a href="index.html">AI Engineering · Week 1</a> · Python from zero</span>
+<span class="progress"><span class="ptext"></span></span>
+<span class="os" role="group" aria-label="Your computer"><button type="button" value="win">Windows</button><button type="button" value="mac">macOS</button></span></div></div>
+<main class="wrap">
+<div class="rule"></div><div class="kicker">Week 1 · Bridge 0 companion · New to coding? · about 90 min</div>
+<h1>Python from zero</h1><p class="lede">Twelve short lessons for anyone who has never programmed. Each one is a small file you run, read and change, with the exact output to expect. No API key, no internet, nothing to break that <code>git restore</code> can't put back.</p>
+<ul class="meta"><li><b>Do it</b>after Bridge 0. Lessons 1–7 before Saturday if you can; the rest before Week 2</li><li><b>Files</b><code>python_basics/</code>: one file per lesson</li><li><b>Questions</b><b>the cohort WhatsApp group</b>. If it needs a call, Arun sets up a one-to-one</li></ul>
+<p>You need the repo and uv from the <a href="setup.html">setup page</a>, and the terminal from <a href="bridge0.html">Bridge 0</a>. Already comfortable with Python? Skip to the quick check at the bottom.</p><div class="box"><h3>How every lesson works</h3><ol><li><b>Run</b> the file with the command shown, from the <code>week1-llm-foundations</code> folder.</li><li><b>Compare</b> your output with “What you'll see”.</li><li><b>Read</b> the file next to its output. The comments explain each line.</li><li><b>Change</b> it: do what the <code># CHANGE ME</code> line says, save (<b>Ctrl+S</b>, or <b>Cmd+S</b> on a Mac), and run again.</li><li><b>Check yourself</b> with the folded question, then tick Done.</li></ol><p>Broke a file and want it back? <code>git restore python_basics/</code> puts every lesson back the way it came.</p></div>
+<div class="notice"><div class="lab">Why bother before Saturday?</div><div class="big">Read it, don't fear it.</div>On Saturday you won't write code from a blank page. You'll read working scripts and change one marked line. Every lesson here ends by pointing at the exact place you'll meet it in the labs.</div>
+
+<ol class="steps"><li class="step" id="l01"><div class="head"><span class="num">1</span><h3>Print something, and leave a note</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>A Python program is a text file of instructions, run from top to bottom, one line at a time. <code>print()</code> shows whatever is inside its brackets. Text goes inside quotes; without quotes, Python works the value out. A <code>#</code> starts a <b>comment</b>: a note for people, which Python skips.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/01_print.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>Hello from Python!
+Week 1 starts on Saturday at 10:00.
+5
+2 + 3
+one two three</code></pre></div><p>Now open <code>python_basics/01_print.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/01_print.py</span></div><pre><code># Lesson 1 of 12 - print() and comments
+# Run it from the week1-llm-foundations folder:
+#     uv run python_basics/01_print.py
+
+print(&quot;Hello from Python!&quot;)
+print(&quot;Week 1 starts on Saturday at 10:00.&quot;)
+
+print(2 + 3)                    # without quotes, Python works it out: 5
+print(&quot;2 + 3&quot;)                  # in quotes, it&#x27;s just text
+print(&quot;one&quot;, &quot;two&quot;, &quot;three&quot;)    # several things at once, with spaces between
+
+# A line that starts with # is a comment: a note for humans. Python skips it.
+# print(&quot;You won&#x27;t see this line, because it&#x27;s a comment.&quot;)
+
+# CHANGE ME: add a line below that prints your name and your job.</code></pre></div><p><b>On Saturday:</b> Every lab prints its results. Lab 1's three taglines are three <code>print()</code> lines.</p><p><b>Try it:</b> Under the <code># CHANGE ME</code> line, add <code>print("…")</code> with your name and your job. Save, and run again.</p><details class="answer"><summary>Check yourself: What's the difference between <code>print(2 + 3)</code> and <code>print("2 + 3")</code>?</summary><p>The first prints 5: without quotes, Python does the sum. The second prints the text 2 + 3, exactly as written.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/introduction.html">Tutorial 3.1: Python as a calculator</a></span></p><div class="expected"><span class="lbl">Expected</span>Your line appears at the bottom of the output.</div></li><li class="step" id="l02"><div class="head"><span class="num">2</span><h3>Values have types</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Every value has a <b>type</b>, and the type decides what you can do with it. Four you'll meet every day: <b>str</b> (text, always in quotes), <b>int</b> (whole numbers), <b>float</b> (numbers with a decimal point) and <b>bool</b> (<code>True</code> or <code>False</code>). <code>type()</code> tells you which one you have. The same <code>+</code> joins text but adds numbers.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/02_values_and_types.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>&lt;class &#x27;str&#x27;&gt;
+&lt;class &#x27;int&#x27;&gt;
+&lt;class &#x27;float&#x27;&gt;
+&lt;class &#x27;bool&#x27;&gt;
+428
+50
+50
+42 tokens</code></pre></div><p>Now open <code>python_basics/02_values_and_types.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/02_values_and_types.py</span></div><pre><code># Lesson 2 of 12 - values and their types
+#     uv run python_basics/02_values_and_types.py
+
+print(type(&quot;hello&quot;))        # str   = text. Always inside quotes.
+print(type(42))             # int   = a whole number
+print(type(0.10))           # float = a number with a decimal point
+print(type(True))           # bool  = True or False (capital T, capital F)
+
+# The type decides what + does:
+print(&quot;42&quot; + &quot;8&quot;)           # two pieces of text, joined: 428
+print(42 + 8)               # two numbers, added: 50
+
+# Convert when you need to:
+print(int(&quot;42&quot;) + 8)        # text -&gt; number, then add: 50
+print(str(42) + &quot; tokens&quot;)  # number -&gt; text, then join: 42 tokens
+
+# CHANGE ME: add the line   print(&quot;42&quot; + 8)   and run it.
+# Read the error (a TypeError), then delete the line again.</code></pre></div><p><b>On Saturday:</b> Token counts are ints, prices are floats, and the model's answer is a str.</p><p><b>Try it:</b> Add the line <code>print("42" + 8)</code> and run it. Read the last line of the error, then delete the line.</p><details class="answer"><summary>Check yourself: What does <code>print("7" + "7")</code> show?</summary><p>77. Two pieces of text are joined, not added.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/introduction.html#numbers">Tutorial 3.1.1: Numbers</a> · <a href="https://docs.python.org/3/tutorial/introduction.html#text">Tutorial 3.1.2: Text</a></span></p><div class="expected"><span class="lbl">Expected</span><code>TypeError: can only concatenate str (not "int") to str</code>. Python won't guess whether you meant text or a sum.</div></li><li class="step" id="l03"><div class="head"><span class="num">3</span><h3>Variables: a name for a value</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p><code>=</code> means “put the value on the right into the name on the left”. It isn't the equals sign from maths: <code>max_tokens = 2048</code> replaces whatever was there. To <i>ask</i> whether two things are equal, use <code>==</code>, which answers <code>True</code> or <code>False</code>.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/03_variables.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>claude-haiku-5-5
+1024
+2048
+1
+True
+False</code></pre></div><p>Now open <code>python_basics/03_variables.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/03_variables.py</span></div><pre><code># Lesson 3 of 12 - variables: a name for a value
+#     uv run python_basics/03_variables.py
+
+model = &quot;claude-haiku-5-5&quot;      # = puts the value on the right into the name on the left
+max_tokens = 1024
+print(model)
+print(max_tokens)
+
+max_tokens = 2048               # a variable can change: the name now holds a new value
+print(max_tokens)
+
+learners = 9
+pairs = 4
+print(learners - pairs * 2)     # 9 - 8 = 1 learner left over, who makes one pair a trio
+
+print(learners == 9)            # == ASKS &quot;is it equal?&quot; and answers True or False
+print(learners == 10)
+
+# Good names: lowercase_with_underscores, no spaces, never starting with a digit.
+# CAPITALS (like MODEL in the labs) mean &quot;set once, don&#x27;t change it&quot;.
+
+# CHANGE ME: make a variable called my_name, put your name in it, and print it.</code></pre></div><p><b>On Saturday:</b> <code>MODEL = "claude-haiku-5-5"</code> at the top of every lab; <code>prompt</code>, <code>message</code> and <code>usage</code> inside them.</p><p><b>Try it:</b> Add <code>my_name = "…"</code> with your name, then <code>print(my_name)</code>.</p><details class="answer"><summary>Check yourself: After <code>x = 5</code> and then <code>x = x + 1</code>, what is <code>x</code>?</summary><p>6. The right side is worked out first (5 + 1), then stored back in x.</p></details><details class="answer"><summary>Check yourself: What's the difference between <code>=</code> and <code>==</code>?</summary><p><code>=</code> stores a value. <code>==</code> asks whether two values are equal.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/introduction.html#numbers">Tutorial 3.1.1: Numbers and variables</a></span></p><div class="expected"><span class="lbl">Expected</span>Your name printed at the end.</div></li><li class="step" id="l04"><div class="head"><span class="num">4</span><h3>Strings: working with text</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Text is called a <b>string</b>. <b>Methods</b> are tools attached to a value, written after a dot: <code>ticket.strip()</code>, <code>ticket.lower()</code>. An <b>f-string</b> (an <code>f</code> just before the quote) fills its <code>{blanks}</code> with values. Triple quotes hold text over several lines.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/04_strings.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>43
+Export button throws 500 for PAID users
+  export button throws 500 for paid users  
+  Export button throws an error for PAID users  
+True
+Asha used 1200 tokens
+That&#x27;s 1.2 thousand tokens
+You are a support-ticket triage assistant.
+Return exactly three lines.</code></pre></div><p>Now open <code>python_basics/04_strings.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/04_strings.py</span></div><pre><code># Lesson 4 of 12 - strings: working with text
+#     uv run python_basics/04_strings.py
+
+ticket = &quot;  Export button throws 500 for PAID users  &quot;
+print(len(ticket))                       # how many characters, spaces included
+print(ticket.strip())                    # without the spaces at both ends
+print(ticket.lower())                    # all lower case
+print(ticket.replace(&quot;500&quot;, &quot;an error&quot;)) # swap one piece of text for another
+print(&quot;500&quot; in ticket)                   # is this text inside? True or False
+
+name = &quot;Asha&quot;
+tokens = 1200
+print(f&quot;{name} used {tokens} tokens&quot;)    # an f-string: the {blanks} get filled in
+print(f&quot;That&#x27;s {tokens / 1000} thousand tokens&quot;)   # any sum works inside { }
+
+prompt = &quot;&quot;&quot;You are a support-ticket triage assistant.
+Return exactly three lines.&quot;&quot;&quot;
+print(prompt)                            # triple quotes hold text over several lines, like a prompt
+
+# CHANGE ME: put your own name in `name`, then print one sentence about yourself with an f-string.</code></pre></div><p><b>On Saturday:</b> Prompts are strings. Lab 1 prints with an f-string, and Lab 3 fills <code>{ticket}</code> into its prompt with <code>.replace()</code>.</p><p><b>Try it:</b> Put your own name in <code>name</code>, then add one <code>print(f"…")</code> about yourself with a variable inside <code>{ }</code>.</p><details class="answer"><summary>Check yourself: <code>name = "Ravi"</code>. What does <code>print(f"Hi {name}")</code> show? And without the <code>f</code>?</summary><p>Hi Ravi. Without the f it prints Hi {name}, braces and all.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/introduction.html#text">Tutorial 3.1.2: Text</a> · <a href="https://docs.python.org/3/library/stdtypes.html#string-methods">String methods</a> · <a href="https://docs.python.org/3/tutorial/inputoutput.html#formatted-string-literals">f-strings</a></span></p><div class="expected"><span class="lbl">Expected</span>Your sentence, with the blank filled in.</div></li><li class="step" id="l05"><div class="head"><span class="num">5</span><h3>Numbers, and the Week 1 cost formula</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Python does arithmetic with <code>+ - * /</code>, plus <code>//</code> (divide and drop the remainder), <code>%</code> (the remainder) and <code>**</code> (to the power of). Underscores in a number are only there to help you read it. Computers store decimals approximately, so round when you show money: <code>round(x, 6)</code>, or <code>:.6f</code> and <code>:,</code> inside an f-string.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/05_numbers.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>10 4 21
+3.5
+3
+1
+1024
+0.0004
+0.0004
+$0.000400
+1,500,000 calls a month
+$600.00 a month</code></pre></div><p>Now open <code>python_basics/05_numbers.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/05_numbers.py</span></div><pre><code># Lesson 5 of 12 - numbers and the Week 1 cost formula
+#     uv run python_basics/05_numbers.py
+
+print(7 + 3, 7 - 3, 7 * 3)   # add, subtract, multiply
+print(7 / 2)                 # divide: / always gives a decimal
+print(7 // 2)                # whole-number divide: drops the remainder
+print(7 % 2)                 # the remainder
+print(2 ** 10)               # &quot;to the power of&quot;
+
+# Haiku 5.5 prices are in dollars per MILLION tokens: $0.10 in, $0.50 out.
+input_tokens = 2_000         # underscores make big numbers easier to read; Python ignores them
+output_tokens = 400
+cost = input_tokens / 1_000_000 * 0.10 + output_tokens / 1_000_000 * 0.50
+print(cost)                  # computers store decimals approximately, so you may see many digits
+print(round(cost, 6))        # rounded to 6 decimal places
+print(f&quot;${cost:.6f}&quot;)        # :.6f in an f-string = always show 6 decimal places
+
+calls_per_month = 10_000 * 5 * 30
+print(f&quot;{calls_per_month:,} calls a month&quot;)            # :, adds commas
+print(f&quot;${cost * calls_per_month:,.2f} a month&quot;)       # commas AND 2 decimal places
+
+# CHANGE ME: price a 120,000-token prompt. Over 100K tokens the input rate is $0.50 per million.</code></pre></div><p><b>On Saturday:</b> This is Lab 2's formula, worked by hand on slide 27: 2,000 tokens in and 400 out is $0.0004 a call, and $600 a month at 1.5 million calls.</p><p><b>Try it:</b> Price a 120,000-token prompt; over 100K tokens the input rate is $0.50 per million. Add <code>long_cost = 120_000 / 1_000_000 * 0.50</code> and print it.</p><details class="answer"><summary>Check yourself: What do <code>7 / 2</code>, <code>7 // 2</code> and <code>7 % 2</code> give?</summary><p>3.5, 3 and 1.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/introduction.html#numbers">Tutorial 3.1.1: Numbers</a> · <a href="https://docs.python.org/3/library/string.html#format-specification-mini-language">Formatting numbers (:.2f, :,)</a></span></p><div class="expected"><span class="lbl">Expected</span>0.06: six cents of input on every call, 150 times the whole small call above.</div></li><li class="step" id="l06"><div class="head"><span class="num">6</span><h3>Lists: values in order</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>A <b>list</b> holds values in order, inside <code>[ ]</code>, separated by commas. Python counts from <b>0</b>: <code>efforts[0]</code> is the first item and <code>efforts[-1]</code> the last. <code>.append()</code> adds to the end, <code>len()</code> counts, and <code>in</code> asks whether something is there.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/06_lists.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>[&#x27;low&#x27;, &#x27;medium&#x27;, &#x27;high&#x27;]
+low
+high
+high
+3
+[&#x27;low&#x27;, &#x27;medium&#x27;, &#x27;high&#x27;, &#x27;max&#x27;]
+True
+[&#x27;medium&#x27;, &#x27;high&#x27;]
+5.6 0.8 2.5</code></pre></div><p>Now open <code>python_basics/06_lists.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/06_lists.py</span></div><pre><code># Lesson 6 of 12 - lists: several values, in order
+#     uv run python_basics/06_lists.py
+
+efforts = [&quot;low&quot;, &quot;medium&quot;, &quot;high&quot;]
+print(efforts)
+print(efforts[0])          # counting starts at 0, so [0] is the FIRST item
+print(efforts[2])          # and [2] is the third
+print(efforts[-1])         # -1 counts from the end: the last item
+print(len(efforts))        # how many items
+
+efforts.append(&quot;max&quot;)      # add an item to the end
+print(efforts)
+print(&quot;high&quot; in efforts)   # is it in the list? True or False
+print(efforts[1:3])        # a slice: items 1 and 2 (it stops BEFORE 3)
+
+seconds = [1.2, 0.8, 2.5, 1.1]          # how long four calls took
+print(sum(seconds), min(seconds), max(seconds))
+
+# CHANGE ME: make a list of three tools you use at work, and print the second one.</code></pre></div><p><b>On Saturday:</b> Lab 1 loops over the effort levels; a reply's <code>content</code> is a list of blocks; <code>messages=[…]</code> is a list too.</p><p><b>Try it:</b> Make <code>tools = ["…", "…", "…"]</code> with three tools you use at work, and <code>print(tools[1])</code>.</p><details class="answer"><summary>Check yourself: <code>x = ["a", "b", "c"]</code>. What are <code>x[0]</code>, <code>x[-1]</code> and <code>len(x)</code>?</summary><p>a, c and 3.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/introduction.html#lists">Tutorial 3.1.3: Lists</a> · <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">Tutorial 5.1: More on lists</a></span></p><div class="expected"><span class="lbl">Expected</span>The <i>second</i> tool on your list, because counting starts at 0.</div></li><li class="step" id="l07"><div class="head"><span class="num">7</span><h3>Dicts: labels and values, and data inside data</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>A <b>dict</b> pairs labels (called <b>keys</b>) with values, inside <code>{ }</code>: <code>{"input_tokens": 31}</code>. Look a value up with its label in square brackets. <code>.get(label, default)</code> doesn't crash when the label is missing. Dicts and lists nest inside each other, and that is exactly the shape of JSON.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/07_dicts.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>31
+{&#x27;input_tokens&#x27;: 31, &#x27;output_tokens&#x27;: 52, &#x27;thinking_tokens&#x27;: 12}
+0
+3
+52
+Cold brew. Warm welcome.
+thinking</code></pre></div><p>Now open <code>python_basics/07_dicts.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/07_dicts.py</span></div><pre><code># Lesson 7 of 12 - dicts: values with labels, and data inside data
+#     uv run python_basics/07_dicts.py
+
+usage = {&quot;input_tokens&quot;: 31, &quot;output_tokens&quot;: 52}    # label: value, label: value
+print(usage[&quot;input_tokens&quot;])          # look a value up by its label (its &quot;key&quot;)
+
+usage[&quot;thinking_tokens&quot;] = 12         # add a new label and value
+print(usage)
+print(usage.get(&quot;cache_tokens&quot;, 0))   # .get() gives a default when the label is missing
+print(len(usage))                     # how many labels
+
+# Data inside data: a list of dicts inside a dict. This is the shape of an API reply.
+reply = {
+    &quot;content&quot;: [
+        {&quot;type&quot;: &quot;thinking&quot;, &quot;thinking&quot;: &quot;They want something short...&quot;},
+        {&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;Cold brew. Warm welcome.&quot;},
+    ],
+    &quot;usage&quot;: {&quot;input_tokens&quot;: 31, &quot;output_tokens&quot;: 52},
+}
+print(reply[&quot;usage&quot;][&quot;output_tokens&quot;])   # step in one level at a time
+print(reply[&quot;content&quot;][1][&quot;text&quot;])       # the answer - but only because we KNOW it&#x27;s second
+print(reply[&quot;content&quot;][0][&quot;type&quot;])       # the first block is thinking, not the answer
+
+# CHANGE ME: add your own label to `usage`, e.g. usage[&quot;calls&quot;] = 3, and print the whole dict.</code></pre></div><p><b>On Saturday:</b> A reply's <code>usage</code> is the receipt; slide 11's JSON is dicts inside a list inside a dict; Lab 1 sends <code>{"role": "user", "content": prompt}</code>.</p><p><b>Try it:</b> Add <code>usage["calls"] = 3</code> and <code>print(usage)</code>.</p><details class="answer"><summary>Check yourself: Why is <code>reply["content"][1]["text"]</code> fragile?</summary><p>It assumes the answer is the second block. The labs pick the block whose type is "text" instead, wherever it is.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">Tutorial 5.5: Dictionaries</a></span></p><div class="expected"><span class="lbl">Expected</span>The dict printed with your new label at the end.</div></li><li class="step" id="l08"><div class="head"><span class="num">8</span><h3>if, elif, else: making decisions</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p><code>if</code> runs its indented lines only when its test is True. <code>elif</code> (else-if) tries another test, and <code>else</code> catches everything left. Tests compare with <code>== != &lt; &gt; &lt;= &gt;=</code> and combine with <code>and</code>, <code>or</code> and <code>not</code>. <b>Indentation matters:</b> the four-space indent marks the lines that belong to the <code>if</code>.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/08_if.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>Over budget: ask before you ship
+Handle it today
+True
+Long prompt: every rate is x5</code></pre></div><p>Now open <code>python_basics/08_if.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/08_if.py</span></div><pre><code># Lesson 8 of 12 - if / elif / else: making decisions
+#     uv run python_basics/08_if.py
+
+monthly_cost = 600
+budget = 500
+if monthly_cost &gt; budget:
+    print(&quot;Over budget: ask before you ship&quot;)
+else:
+    print(&quot;Within budget&quot;)
+
+priority = &quot;high&quot;
+if priority == &quot;urgent&quot;:
+    print(&quot;Page the on-call engineer&quot;)
+elif priority == &quot;high&quot;:
+    print(&quot;Handle it today&quot;)
+else:
+    print(&quot;Add it to the queue&quot;)
+
+prompt_tokens = 120_000
+is_long = prompt_tokens &gt; 100_000       # a comparison gives True or False
+print(is_long)
+if is_long and priority != &quot;low&quot;:
+    print(&quot;Long prompt: every rate is x5&quot;)
+
+# Compare with:  ==  !=  &lt;  &gt;  &lt;=  &gt;=      Combine with:  and  or  not
+# The indented lines belong to the line above them that ends with a colon.
+
+# CHANGE ME: set priority to &quot;urgent&quot; and run; then to &quot;low&quot; and run again.</code></pre></div><p><b>On Saturday:</b> Lab 2 picks the price tier with an <code>if</code>: over 100,000 input tokens, the long rate. Your triage tool will route tickets by priority.</p><p><b>Try it:</b> Set <code>priority = "urgent"</code> and run; then <code>"low"</code> and run again.</p><details class="answer"><summary>Check yourself: What prints if <code>priority = "medium"</code>?</summary><p>“Add it to the queue”: it isn't urgent or high, so the else runs.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">Tutorial 4.1: if statements</a></span></p><div class="expected"><span class="lbl">Expected</span>“Page the on-call engineer”, then “Add it to the queue”. With <code>"low"</code> the long-prompt line disappears too.</div></li><li class="step" id="l09"><div class="head"><span class="num">9</span><h3>for loops: repeat for each item</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>A <code>for</code> loop runs its indented lines once for each item, with a name holding the current one. <code>range(1, 4)</code> gives 1, 2, 3 and stops before 4. <code>.items()</code> walks a dict's labels and values together. Put an <code>if</code> inside a loop to keep only some items.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/09_loops.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>trying effort low
+trying effort medium
+trying effort high
+run 1
+run 2
+run 3
+input_tokens -&gt; 31
+output_tokens -&gt; 52
+tickets today: 52
+only 8 high tickets
+only 2 urgent tickets</code></pre></div><p>Now open <code>python_basics/09_loops.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/09_loops.py</span></div><pre><code># Lesson 9 of 12 - for loops: do the same thing for each item
+#     uv run python_basics/09_loops.py
+
+for effort in [&quot;low&quot;, &quot;medium&quot;, &quot;high&quot;]:
+    print(&quot;trying effort&quot;, effort)        # runs once per item; `effort` holds the current one
+
+for run in range(1, 4):                   # 1, 2, 3: range stops BEFORE 4
+    print(f&quot;run {run}&quot;)
+
+usage = {&quot;input_tokens&quot;: 31, &quot;output_tokens&quot;: 52}
+for label, value in usage.items():        # a dict gives you each label and its value
+    print(label, &quot;-&gt;&quot;, value)
+
+total = 0
+for count in [12, 30, 8, 2]:
+    total = total + count                 # add up as you go
+print(&quot;tickets today:&quot;, total)
+
+tickets = {&quot;low&quot;: 12, &quot;medium&quot;: 30, &quot;high&quot;: 8, &quot;urgent&quot;: 2}
+for priority, count in tickets.items():
+    if count &lt; 10:                        # an if inside a loop: keep only some items
+        print(f&quot;only {count} {priority} tickets&quot;)
+
+# CHANGE ME: loop over a list of three foods you like, and print each one in an f-string.</code></pre></div><p><b>On Saturday:</b> Lab 1's three runs are <code>for run in range(1, 4)</code>; the mini-lab loops over four languages; every lab finds the answer by looping over the reply's blocks.</p><p><b>Try it:</b> Add a loop over three foods you like, printing each one in an f-string.</p><details class="answer"><summary>Check yourself: How many times does <code>for i in range(5):</code> run, and what is <code>i</code> the first time?</summary><p>Five times, and i starts at 0: 0, 1, 2, 3, 4.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/controlflow.html#for-statements">Tutorial 4.2: for statements</a> · <a href="https://docs.python.org/3/tutorial/controlflow.html#the-range-function">Tutorial 4.3: range()</a></span></p><div class="expected"><span class="lbl">Expected</span>Three new lines, one per food.</div></li><li class="step" id="l10"><div class="head"><span class="num">10</span><h3>Functions: name a recipe, use it again</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p><code>def</code> names a recipe; the indented lines are its steps. Values go in through <b>parameters</b>, and <code>return</code> hands a result back. You can give values in order or by name, and a parameter with a default can be left out. A function that only prints returns <code>None</code>.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/10_functions.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>0.0004
+0.0004
+Hello, Asha!
+Vanakkam, Asha!
+DONE
+None</code></pre></div><p>Now open <code>python_basics/10_functions.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/10_functions.py</span></div><pre><code># Lesson 10 of 12 - functions: name a recipe, use it many times
+#     uv run python_basics/10_functions.py
+
+def cost_usd(input_tokens, output_tokens):
+    &quot;&quot;&quot;Dollar cost of one Haiku 5.5 call (prompt under 100K tokens).&quot;&quot;&quot;
+    return input_tokens / 1_000_000 * 0.10 + output_tokens / 1_000_000 * 0.50
+
+
+print(cost_usd(2000, 400))                               # give it values in order...
+print(cost_usd(output_tokens=400, input_tokens=2000))    # ...or by name: same answer
+
+
+def greet(name, greeting=&quot;Hello&quot;):        # greeting has a default, so you can leave it out
+    return f&quot;{greeting}, {name}!&quot;
+
+
+print(greet(&quot;Asha&quot;))
+print(greet(&quot;Asha&quot;, greeting=&quot;Vanakkam&quot;))
+
+
+def shout(text):
+    print(text.upper())                   # this PRINTS, but doesn&#x27;t RETURN anything
+
+
+result = shout(&quot;done&quot;)
+print(result)                             # None: there was nothing returned to keep
+
+# CHANGE ME: write a function monthly_cost(cost_per_call, calls) that returns
+# cost_per_call * calls, then print monthly_cost(0.0004, 1_500_000).</code></pre></div><p><b>On Saturday:</b> <code>ask()</code> in Lab 1, <code>cost_usd()</code> in Lab 2, <code>load_prompt()</code> in Lab 3. <code>client.messages.create(model=…, max_tokens=…)</code> is a function called with named values.</p><p><b>Try it:</b> Write <code>monthly_cost(cost_per_call, calls)</code> that returns <code>cost_per_call * calls</code>, and print <code>monthly_cost(0.0004, 1_500_000)</code>.</p><details class="answer"><summary>Check yourself: What's the difference between <code>return</code> and <code>print()</code> inside a function?</summary><p>print shows a value on the screen. return hands it back to the code that called the function, so it can be stored and used.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions">Tutorial 4.8: Defining functions</a> · <a href="https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions">Tutorial 4.9: Default and keyword arguments</a></span></p><div class="expected"><span class="lbl">Expected</span><code>600.0</code>: the slide 27 bill.</div></li><li class="step" id="l11"><div class="head"><span class="num">11</span><h3>import: use code someone else wrote</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>A <b>module</b> is a file of ready-made tools. <code>import math</code> brings in the whole module (you then write <code>math.sqrt</code>); <code>from datetime import date</code> brings in one name. Python comes with hundreds of modules. Other <b>packages</b> are installed first: in this course, <code>uv run</code> installs the ones listed in <code>pyproject.toml</code>.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/11_imports.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>4.0
+3
+1.4
+Saturday</code></pre></div><p>Now open <code>python_basics/11_imports.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/11_imports.py</span></div><pre><code># Lesson 11 of 12 - import: use code someone else wrote
+#     uv run python_basics/11_imports.py
+
+import math                      # a module (a toolbox) that comes with Python
+import statistics
+from datetime import date        # bring in just one name from a module
+
+print(math.sqrt(16))             # module name, a dot, then the tool you want
+print(math.ceil(2.1))            # round UP to a whole number
+print(statistics.mean([1.2, 0.8, 2.5, 1.1]))    # the average of four call times
+print(date(2026, 11, 28).strftime(&quot;%A&quot;))    # which day of the week is Week 1?
+
+# Packages that DON&#x27;T come with Python are installed first, then imported the same way.
+# The labs use two, listed in pyproject.toml, and `uv run` installs them for you:
+#     from anthropic import Anthropic
+#     from dotenv import load_dotenv
+
+# CHANGE ME: import the random module and print random.choice([&quot;low&quot;, &quot;medium&quot;, &quot;high&quot;]).
+# Run it a few times: the answer changes, a bit like a model&#x27;s.</code></pre></div><p><b>On Saturday:</b> Every lab starts with <code>from anthropic import Anthropic</code>. <code>ModuleNotFoundError</code> means a package isn't installed in the Python you ran: use <code>uv run</code>.</p><p><b>Try it:</b> Add <code>import random</code> and <code>print(random.choice(["low", "medium", "high"]))</code>. Run it a few times.</p><details class="answer"><summary>Check yourself: What does <code>ModuleNotFoundError: No module named 'anthropic'</code> usually mean?</summary><p>The package isn't installed in the Python you used. Run the file with uv run, which installs it.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/modules.html">Tutorial 6: Modules</a> · <a href="https://docs.python.org/3/library/index.html">What comes with Python</a></span></p><div class="expected"><span class="lbl">Expected</span>A different effort level on different runs.</div></li><li class="step" id="l12"><div class="head"><span class="num">12</span><h3>Read a file, and JSON</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p><code>Path("…").read_text()</code> reads a whole file into one string. The path starts from the folder your terminal is in, which is why you run the lessons from <code>week1-llm-foundations</code>. <code>json.loads()</code> turns JSON text into dicts and lists; <code>json.dumps()</code> turns them back into text.</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run python_basics/12_files_and_json.py</code></pre></div><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>Disk usage on db-01 is 91% and rising.
+Nightly backup finished at 02:14.
+No errors in the last hour.
+
+3 lines; the first is: Disk usage on db-01 is 91% and rising.
+&lt;class &#x27;dict&#x27;&gt;
+high - Export button throws 500 for paid users
+reports
+{
+  &quot;id&quot;: 4127,
+  &quot;priority&quot;: &quot;high&quot;,
+  &quot;category&quot;: &quot;bug&quot;,
+  &quot;summary&quot;: &quot;Export button throws 500 for paid users&quot;,
+  &quot;tags&quot;: [
+    &quot;reports&quot;,
+    &quot;export&quot;,
+    &quot;finance&quot;
+  ],
+  &quot;status&quot;: &quot;triaged&quot;
+}</code></pre></div><p>Now open <code>python_basics/12_files_and_json.py</code> in VS Code and read it, line by line, next to the output:</p><div class="block"><div class="bar"><span>python_basics/12_files_and_json.py</span></div><pre><code># Lesson 12 of 12 - reading a file, and JSON
+#     uv run python_basics/12_files_and_json.py
+# Run it from the week1-llm-foundations folder: the paths below start from there.
+
+import json
+from pathlib import Path
+
+text = Path(&quot;python_basics/alert.txt&quot;).read_text(encoding=&quot;utf-8&quot;)   # the whole file, as one string
+print(text)
+lines = text.splitlines()                 # one string per line
+print(len(lines), &quot;lines; the first is:&quot;, lines[0])
+
+raw = Path(&quot;python_basics/ticket.json&quot;).read_text(encoding=&quot;utf-8&quot;)
+ticket = json.loads(raw)                  # JSON text -&gt; a Python dict
+print(type(ticket))
+print(ticket[&quot;priority&quot;], &quot;-&quot;, ticket[&quot;summary&quot;])
+print(ticket[&quot;tags&quot;][0])
+
+ticket[&quot;status&quot;] = &quot;triaged&quot;
+print(json.dumps(ticket, indent=2))       # a Python dict -&gt; JSON text again
+
+# Lab 3 loads its prompt the same way: Path(&quot;prompts/extract_ticket.md&quot;).read_text(...)
+
+# CHANGE ME: change &quot;priority&quot; in python_basics/ticket.json to &quot;urgent&quot;, save it, and run again.</code></pre></div><p><b>On Saturday:</b> Lab 3 reads its prompt with <code>read_text()</code>, Lab 2 saves its receipt with <code>write_text()</code>, and every API request and reply travels as JSON.</p><p><b>Try it:</b> Open <code>python_basics/ticket.json</code>, change <code>"high"</code> to <code>"urgent"</code>, save, and run again.</p><details class="answer"><summary>Check yourself: You run this lesson from inside the <code>python_basics</code> folder and get <code>FileNotFoundError</code>. Why?</summary><p>The path python_basics/alert.txt starts from the folder you're in. Go up one level (cd ..) and run it again.</p></details><p><span class="small">Go deeper: <a href="https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files">Tutorial 7.2: Reading and writing files</a> · <a href="https://docs.python.org/3/tutorial/inputoutput.html#saving-structured-data-with-json">Tutorial 7.2.2: Saving data with json</a></span></p><div class="expected"><span class="lbl">Expected</span>The priority line and the JSON both say urgent. Put the file back afterwards with <code>git restore python_basics/ticket.json</code>.</div></li></ol>
+<div class="box quick"><h3>Quick check</h3><p class="small">Answer in your head or on paper first, then open the answer. Not graded. If one surprises you, ask in <b>the cohort WhatsApp group</b>.</p><ol><li><p>What does <code>print(type(0.5))</code> show?</p><details class="answer"><summary>Answer</summary><p><code>&lt;class 'float'&gt;</code>: a number with a decimal point.</p></details></li><li><p><code>x = [10, 20, 30]</code>. What is <code>x[1]</code>?</p><details class="answer"><summary>Answer</summary><p>20. Counting starts at 0.</p></details></li><li><p><code>d = {"a": 1}</code>. What does <code>d.get("b", 0)</code> give, and what happens with <code>d["b"]</code>?</p><details class="answer"><summary>Answer</summary><p>0, the default. <code>d["b"]</code> stops with a KeyError, because there's no label "b".</p></details></li><li><p><code>def double(n): return n * 2</code>. What does <code>print(double(4))</code> show?</p><details class="answer"><summary>Answer</summary><p>8.</p></details></li><li><p>Which lines belong to an <code>if</code> or a <code>for</code>?</p><details class="answer"><summary>Answer</summary><p>The indented lines directly under it. The line above them ends with a colon.</p></details></li></ol></div>
+<h2>If something goes wrong</h2><details><summary>“No such file or directory” or FileNotFoundError</summary><p>You're in the wrong folder. Run <code>cd AIEngineeringLab/week1-llm-foundations</code> from where you cloned the repo, or <code>cd ..</code> if you're inside <code>python_basics</code>.</p></details><details><summary>SyntaxError or IndentationError after your change</summary><p>Check that every quote and bracket you opened is closed, and that indented lines use four spaces. Can't find it? <code>git restore python_basics/</code> and try the change again.</p></details><details><summary>NameError: name '…' is not defined</summary><p>A name is misspelt, or used before the line that sets it. Python is case-sensitive: <code>Name</code> and <code>name</code> are different.</p></details><details><summary>Your output doesn't match “What you'll see”</summary><p>Did you already make the change? Then it shouldn't match. Otherwise, check you saved the file and ran the lesson with the right number.</p></details><details><summary>“uv” is not recognized</summary><p>Go back to <a href="setup.html#uv">setup step 4</a>, then close and reopen VS Code.</p></details>
+<div class="box"><h3>Keep going (free)</h3><ul><li><a href="https://docs.python.org/3/tutorial/">The Python tutorial</a>: the official tour, chapters 3–7 cover everything on this page in more depth</li><li><a href="https://www.py4e.com/">Python for Everybody</a>: a free book and video course written for complete beginners</li><li><a href="https://automatetheboringstuff.com/">Automate the Boring Stuff with Python</a>: free to read online; practical scripts for everyday work, from files to spreadsheets</li></ul></div>
+<div class="next"><span><b>Done?</b> Post “Python from zero: lessons 1–N done” in the group, or the lesson that stopped you.</span><span class="links"><a href="bridge0.html">← Bridge 0</a> · <a href="index.html">Week 1 home</a> · <a href="lab1-first-call.html"><b>Preview Lab 1 →</b></a></span></div>
+<footer><span>AI Engineering Programme · Week 1 · Python from zero. Your ticks and notes stay in this browser only.</span>
+<button type="button" class="reset">Reset this page</button></footer>
+</main><script>
+(function(){
+  var KEY=document.body.getAttribute('data-guide');
+  function load(k,f){try{var v=localStorage.getItem(KEY+':'+k);return v===null?f:JSON.parse(v);}catch(e){return f;}}
+  function save(k,v){try{localStorage.setItem(KEY+':'+k,JSON.stringify(v));}catch(e){}}
+  // Windows / macOS
+  var plat=(navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent;
+  var detected=/mac|iphone|ipad/i.test(plat)?'mac':'win';
+  var osBtns=document.querySelectorAll('.os button');
+  function setOS(os){document.body.setAttribute('data-os',os);osBtns.forEach(function(b){b.setAttribute('aria-pressed',String(b.value===os));});save('os',os);}
+  osBtns.forEach(function(b){b.addEventListener('click',function(){setOS(b.value);});});
+  setOS(load('os',detected));
+  // copy buttons
+  function copyText(t){
+    if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
+    return new Promise(function(res,rej){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();try{document.execCommand('copy')?res():rej();}catch(e){rej(e);}document.body.removeChild(ta);});
+  }
+  document.querySelectorAll('.block').forEach(function(b){
+    var btn=b.querySelector('.copy'),pre=b.querySelector('pre');if(!btn||!pre)return;
+    btn.addEventListener('click',function(){copyText(pre.textContent.replace(/\n+$/,'')).then(function(){
+      btn.textContent='Copied';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied');},1500);
+    },function(){btn.textContent='Select and copy';});});
+  });
+  // step ticks + progress
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  var done=load('done',{});
+  var ptext=document.querySelector('.ptext'),dots=document.querySelector('.progress');
+  var core=steps.filter(function(s){return !s.classList.contains('stretch');});
+  var links=steps.map(function(s){var a=document.createElement('a');a.href='#'+s.id;a.title=s.querySelector('h3').textContent;
+    if(s.classList.contains('stretch'))a.className='stretch';dots.insertBefore(a,ptext);return a;});
+  function paint(){
+    var n=0;steps.forEach(function(s,i){var on=!!done[s.id];s.classList.toggle('done',on);s.querySelector('.donebox input').checked=on;
+      links[i].classList.toggle('on',on);if(on&&!s.classList.contains('stretch'))n++;});
+    ptext.textContent=n+' of '+core.length+' done';
+  }
+  steps.forEach(function(s){s.querySelector('.donebox input').addEventListener('change',function(e){done[s.id]=e.target.checked;save('done',done);paint();});});
+  paint();
+  // note fields
+  document.querySelectorAll('[data-note]').forEach(function(inp){var k='note:'+inp.getAttribute('data-note');inp.value=load(k,'');
+    inp.addEventListener('input',function(){save(k,inp.value);});});
+  // reset
+  var r=document.querySelector('.reset');if(r)r.addEventListener('click',function(){
+    if(!confirm('Clear your ticks and notes on this page?'))return;
+    try{Object.keys(localStorage).forEach(function(k){if(k.indexOf(KEY+':')===0)localStorage.removeItem(k);});}catch(e){}
+    done={};document.querySelectorAll('[data-note]').forEach(function(i){i.value='';});paint();});
+})();
+</script></body></html>

@@ -1,0 +1,3 @@
+Disk usage on db-01 is 91% and rising.
+Nightly backup finished at 02:14.
+No errors in the last hour.

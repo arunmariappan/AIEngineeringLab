@@ -1,0 +1,7 @@
+{
+  "id": 4127,
+  "priority": "high",
+  "category": "bug",
+  "summary": "Export button throws 500 for paid users",
+  "tags": ["reports", "export", "finance"]
+}
