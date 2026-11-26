@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bridge 0: the basics</title><style>
+:root{--ink:#0D1B2A;--muted:#5B6B7A;--teal:#00808A;--teal-g:#00A9B5;--gold:#9A6700;--gold-g:#E3A81B;
+--coral:#B4432F;--rule:#D9E0E6;--band:#F2F7F8;--code:#F1F4F6;--ph-bg:#FFE97A;--ph-fg:#6B4500;--bg:#FFFFFF}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Calibri,"Segoe UI",system-ui,-apple-system,sans-serif}
+body[data-os="win"] .mac-only,body[data-os="mac"] .win-only{display:none}
+.wrap{max-width:880px;margin:0 auto;padding:28px 16px 72px}
+.top{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);border-bottom:1px solid var(--rule)}
+.top .in{max-width:880px;margin:0 auto;padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.brand{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--teal);text-transform:uppercase;margin-right:auto}
+.progress{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.progress a{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--teal);display:inline-block}
+.progress a.on{background:var(--teal)}
+.progress a.stretch{border-style:dashed}
+.ptext{font-size:13px;color:var(--muted);min-width:84px}
+.os{display:inline-flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden}
+.os button{border:0;background:none;padding:4px 12px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer}
+.os button[aria-pressed="true"]{background:var(--teal);color:#fff}
+.rule{width:44px;height:4px;background:var(--teal-g);margin:18px 0 12px}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.16em;color:var(--teal);text-transform:uppercase}
+h1{font:400 38px/1.15 Georgia,"Times New Roman",serif;margin:6px 0 10px}
+h2{font:400 26px/1.2 Georgia,serif;margin:44px 0 12px}
+h3{font:700 19px/1.3 Georgia,serif;margin:0}
+.lede{font-size:19px;color:var(--muted);margin:0 0 18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 22px;padding:0;list-style:none;font-size:15px}
+.meta b{color:var(--teal);font-weight:700;letter-spacing:.06em;font-size:12px;text-transform:uppercase;margin-right:6px}
+.notice{border-left:5px solid var(--gold-g);background:var(--band);padding:14px 18px;margin:18px 0}
+.notice .lab{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.notice .big{font:400 26px/1.25 Georgia,serif;color:var(--teal);margin:4px 0}
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.step{border:1px solid var(--rule);padding:18px 20px 16px 20px;margin:14px 0;position:relative;scroll-margin-top:70px}
+.step.done{border-left:5px solid var(--teal-g);padding-left:16px}
+.step.done h3{color:var(--muted)}
+.step.stretch{border-style:dashed}
+.head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;font:700 15px/30px Calibri,"Segoe UI",system-ui,sans-serif;text-align:center}
+.step.stretch .num{background:#fff;color:var(--teal);border:1.5px dashed var(--teal);line-height:27px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:1px 8px;margin-left:4px}
+.donebox{margin-left:auto;font-size:14px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer;white-space:nowrap}
+.donebox input{width:18px;height:18px;accent-color:var(--teal)}
+.step p{margin:8px 0}
+.block{border:1px solid var(--rule);background:var(--code);margin:10px 0}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 4px 12px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);letter-spacing:.06em}
+.copy{border:1px solid var(--rule);background:#fff;border-radius:4px;font:inherit;font-size:12px;padding:2px 10px;cursor:pointer;color:var(--teal)}
+.copy.copied{background:var(--teal);color:#fff;border-color:var(--teal)}
+pre{margin:0;padding:12px 14px;overflow-x:auto;font:14.5px/1.5 Consolas,"SF Mono",Menlo,monospace;white-space:pre}
+pre.wrap{white-space:pre-wrap;overflow-wrap:anywhere}
+code{font-family:Consolas,"SF Mono",Menlo,monospace;font-size:.92em;background:var(--code);padding:1px 4px}
+pre code{background:none;padding:0;font-size:inherit}
+.expected{background:var(--band);border-left:4px solid var(--teal-g);padding:8px 14px;margin:12px 0 2px;font-size:15.5px}
+.expected .lbl{display:block;font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--teal);text-transform:uppercase}
+.ph{background:var(--ph-bg);color:var(--ph-fg);font-weight:700;padding:0 3px}
+.warn{color:var(--coral);font-weight:700}
+table.rec{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}
+table.rec th{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule)}
+table.rec td{padding:4px 8px;border-bottom:1px solid var(--rule)}
+table.rec input{width:100%;font:inherit;border:1px solid var(--rule);padding:4px 6px}
+details{border:1px solid var(--rule);margin:8px 0;padding:0 14px}
+details summary{cursor:pointer;padding:10px 0;font-weight:700}
+details[open]{padding-bottom:10px}
+details.answer{border-style:dashed}
+.next{margin-top:36px;padding:14px 18px;border:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.next .links{white-space:nowrap;margin-left:auto}
+.brand a{color:inherit;text-decoration:none}
+table.rec td.when{white-space:nowrap;color:var(--muted);width:1%}
+.box{border:1px solid var(--rule);padding:12px 18px;margin:16px 0}
+.box h3{margin-bottom:6px}
+.box ul{margin:6px 0;padding-left:22px}
+.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.quick{border-left:5px solid var(--coral)}
+.quick h3{color:var(--coral)}
+.quick li p{margin:6px 0 2px}
+.small{font-size:14.5px;color:var(--muted)}
+.tag.phase{color:var(--muted);border-color:var(--rule)}
+table.rec td code{white-space:nowrap}
+a{color:var(--teal)}
+footer{margin-top:48px;padding-top:12px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer button{border:1px solid var(--rule);background:#fff;font:inherit;font-size:13px;padding:3px 10px;cursor:pointer;color:var(--muted)}
+@media (max-width:600px){h1{font-size:30px}.step{padding:14px}.donebox span{display:none}}
+@media print{.top,.copy,footer button,.os{display:none}.step{break-inside:avoid}body[data-os] .win-only,body[data-os] .mac-only{display:block}}
+</style></head>
+<body data-guide="aie-w1-bridge0" data-os="win">
+<div class="top"><div class="in"><span class="brand"><a href="index.html">AI Engineering · Week 1</a> · Bridge 0</span>
+<span class="progress"><span class="ptext"></span></span>
+<span class="os" role="group" aria-label="Your computer"><button type="button" value="win">Windows</button><button type="button" value="mac">macOS</button></span></div></div>
+<main class="wrap">
+<div class="rule"></div><div class="kicker">Week 1 · Bridge 0 · Before Saturday · about 60 min</div>
+<h1>The basics before Saturday</h1><p class="lede">Saturday assumes six small things: the terminal, running a script, reading Python, reading an error, a little git, and what <code>.env</code> is. This page teaches each one on a practice script that needs no key.</p>
+<ul class="meta"><li><b>Do it</b>after the setup page, by Friday 27 November, 8 pm</li><li><b>File</b><code>bridge0_python.py</code> (no key needed; nothing leaves your laptop)</li><li><b>Questions</b><b>the cohort WhatsApp group</b>. If it needs a call, Arun sets up a one-to-one</li></ul>
+<p>Do the <a href="setup.html">setup page</a> first: this page needs steps 1–6 (Git, GitHub, uv, VS Code and the repo). Then work down at your own pace and tick each step. Already comfortable with Python and git? Skim it and do the quick check at the bottom.</p><p><b>Between Saturdays:</b> before each Saturday a bridge page like this one lands in the WhatsApp group, with the basics that Saturday needs. Questions go in the group.</p>
+<div class="notice"><div class="lab">The goal for Saturday</div><div class="big">Read, don't write.</div>In Weeks 1 and 2 you never write code from a blank file. You run working scripts, read them, and change one marked line. This page gets you reading.</div>
+
+<ol class="steps"><li class="step" id="latest"><div class="head"><span class="num">1</span><h3>Open the repo and get the latest files</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>In VS Code choose <b>File › Open Folder</b> and open <code>week1-llm-foundations</code> inside your <code>AIEngineeringLab</code> folder. Then open <b>Terminal › New Terminal</b>. It opens in that folder. Fetch this week's updates:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>git pull</code></pre></div><div class="expected"><span class="lbl">Expected</span><code>Already up to date.</code> or a short list of updated files. The Explorer on the left shows <code>bridge0_python.py</code>.</div></li><li class="step" id="terminal"><div class="head"><span class="num">2</span><h3>Find your way around the terminal</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>The terminal is a window where you type commands instead of clicking. You need five:</p><table class="rec"><tr><th>Type</th><th>It means</th></tr><tr><td><code>pwd</code></td><td>Where am I? Prints the folder you're in.</td></tr><tr><td><code>ls</code></td><td>What's here? Lists the files. Works in PowerShell too.</td></tr><tr><td><code>cd week1-llm-foundations</code></td><td>Go into a folder.</td></tr><tr><td><code>cd ..</code></td><td>Go up one folder.</td></tr><tr><td><code>code .</code></td><td>Open this folder in VS Code.</td></tr></table><p>Three keys save you typing: <b>Tab</b> finishes a file or folder name, <b>↑</b> brings back the last command, and <b>Ctrl+C</b> stops a command that's running. Try a round trip:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>pwd
+cd ..
+ls
+cd week1-llm-foundations
+ls</code></pre></div><p>Support engineers: these are the commands you already use in bash. PowerShell accepts the same names.</p><div class="expected"><span class="lbl">Expected</span>You end up back in <code>week1-llm-foundations</code>, and <code>ls</code> lists the lab files.</div></li><li class="step" id="run"><div class="head"><span class="num">3</span><h3>Run a script</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run bridge0_python.py</code></pre></div><p><code>uv run</code> means: use this project's own Python and packages, then run the file. The first run can take a minute while uv sets things up. Then run it a <b>second time</b> and compare.</p><div class="expected"><span class="lbl">Expected</span>Three <code>run 1:</code> … <code>run 3:</code> lines, an <code>effort=high</code> line, then a block of JSON. On the second run the taglines change: the script picks at random, like a real model.</div></li><li class="step" id="read"><div class="head"><span class="num">4</span><h3>Read Python: the eight things</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Open <code>bridge0_python.py</code> in VS Code. Saturday's slide “Read Python in ten minutes” shows these eight things, and every one of them is in the file, marked with its number:</p><table class="rec"><tr><th>#</th><th>Looks like</th><th>Say it as</th><th>In bash</th></tr><tr><td>1 · Import</td><td><code>import json</code></td><td>Bring in a toolbox someone else wrote.</td><td><code>source</code> a script</td></tr><tr><td>2 · Variable</td><td><code>MODEL = &quot;pretend-model&quot;</code></td><td>A labelled box that holds a value.</td><td><code>MODEL="x"</code></td></tr><tr><td>3 · Function</td><td><code>def fake_reply(prompt, effort=&quot;low&quot;):</code></td><td>A named recipe. <code>effort</code> has a default.</td><td>a bash function</td></tr><tr><td>4 · Calling it</td><td><code>fake_reply(prompt, effort=&quot;high&quot;)</code></td><td>Use the recipe, changing one setting by name.</td><td>running a command with a flag</td></tr><tr><td>5 · Loop</td><td><code>for run in range(1, 4):</code></td><td>Do the indented lines below 3 times: 1, 2, 3.</td><td><code>for i in 1 2 3; do</code></td></tr><tr><td>6 · List, dict</td><td><code>[&quot;low&quot;, &quot;high&quot;]   {&quot;low&quot;: 5}</code></td><td>A list keeps order; a dict maps label → value.</td><td>arrays</td></tr><tr><td>7 · f-string</td><td><code>print(f&quot;run {run}: {answer}&quot;)</code></td><td>Text with the blanks filled in.</td><td><code>echo "run $i"</code></td></tr><tr><td>8 · Comment</td><td><code># a note for humans</code></td><td>Python skips everything after <code>#</code>.</td><td><code>#</code>, the same</td></tr></table><p><b>Indents matter.</b> The indented lines under a line that ends in a colon belong to it: the body of the function, or of the loop. And Python counts the way <code>range(1, 4)</code> does: it stops <i>before</i> the end, so you get 1, 2, 3. Now read the main part of the file:</p><div class="block"><div class="bar"><span>bridge0_python.py</span></div><pre><code>if __name__ == &quot;__main__&quot;:
+    # CHANGE ME (Bridge 0, step 4): write your own prompt here, then run the file again.
+    prompt = &quot;Give me a one-sentence tagline for a coffee shop that only sells cold brew.&quot;
+
+    # 5 · LOOP: do the indented lines 3 times. range(1, 4) gives 1, 2, 3 (it stops BEFORE 4).
+    for run in range(1, 4):
+        reply = fake_reply(prompt)                    # 4 · CALLING IT: use the recipe
+        print(f&quot;run {run}: {text_of(reply)}&quot;)         # 7 · F-STRING: text with the blanks filled in
+
+    # 4 · CALLING IT again, changing one setting by name.
+    reply = fake_reply(prompt, effort=&quot;high&quot;)
+    print(f&quot;\neffort=high: {reply[&#x27;usage&#x27;][&#x27;output_tokens&#x27;]} output tokens&quot;)
+
+    # The whole reply, printed as JSON: the shape every AI API sends back.
+    print(&quot;\nThe full reply, as JSON:&quot;)
+    print(json.dumps(reply, indent=2))</code></pre></div><div class="expected"><span class="lbl">Expected</span>You can read each line of that block aloud as a sentence: “for each run from 1 to 3, get a fake reply and print its text”.</div></li><li class="step" id="change"><div class="head"><span class="num">5</span><h3>Change one line</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Find the line marked <code># CHANGE ME</code> and write your own prompt between the quotes. Save with <b>Ctrl+S</b> (<b>Cmd+S</b> on a Mac) and run it again:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>uv run bridge0_python.py</code></pre></div><p>Then add a fourth tagline to the <code>taglines</code> list: in quotes, with a comma after it. Run it a few times until your tagline comes up.</p><div class="expected"><span class="lbl">Expected</span>In the JSON, <code>input_tokens</code> changes with the length of your prompt, and your tagline appears in some runs. If you see an error instead, good: that's step 7.</div></li><li class="step" id="json"><div class="head"><span class="num">6</span><h3>Read the reply as JSON</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Every AI service answers in <b>JSON</b>: text that holds labels and values. Curly braces <code>{ }</code> hold labels and values (a dict). Square brackets <code>[ ]</code> hold a list, in order. Look at the JSON your run printed and find three things:</p><ol><li>the answer: <code>content</code> → the block whose <code>type</code> is <code>text</code> → <code>text</code></li><li>the bill: <code>usage</code> → <code>output_tokens</code></li><li>the block before the answer: <code>thinking</code>. Real models think first, too.</li></ol><p>This is why every lab picks the text <b>by its type</b>, never by position: the first block may be thinking.</p><div class="expected"><span class="lbl">Expected</span>You can point at the answer and the bill in the JSON, and say why <code>content[0]</code> isn't the answer.</div></li><li class="step" id="error"><div class="head"><span class="num">7</span><h3>Break it on purpose, and read the error</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Change <code>effort="high"</code> to <code>effort="hihg"</code> and run the script. Python stops with a <b>traceback</b>:</p><div class="block"><div class="bar"><span>What you&#x27;ll see (your folder path and line numbers may differ)</span></div><pre><code>Traceback (most recent call last):
+  File &quot;.../week1-llm-foundations/bridge0_python.py&quot;, line 58, in &lt;module&gt;
+    reply = fake_reply(prompt, effort=&quot;hihg&quot;)
+  File &quot;.../week1-llm-foundations/bridge0_python.py&quot;, line 38, in fake_reply
+    &quot;output_tokens&quot;: thinking_tokens[effort] + len(answer) // 4,   # thinking counts as output
+                     ~~~~~~~~~~~~~~~^^^^^^^^
+KeyError: &#x27;hihg&#x27;</code></pre></div><p><b>Read it from the bottom up.</b> The last line says <i>what</i> went wrong: a <code>KeyError</code>, meaning the dict has no label called <code>'hihg'</code>. The lines above say <i>where</i>: the file, the line number, and the line itself. The top <code>File</code> line is where your code started; the bottom one is where it broke.</p><p>Put <code>high</code> back. Now delete the closing <code>)</code> at the end of the <code>print(f"run …</code> line and run again:</p><div class="block"><div class="bar"><span>What you&#x27;ll see</span></div><pre><code>  File &quot;.../week1-llm-foundations/bridge0_python.py&quot;, line 55
+    print(f&quot;run {run}: {text_of(reply)}&quot;
+         ^
+SyntaxError: &#x27;(&#x27; was never closed</code></pre></div><p>A <code>SyntaxError</code> means Python couldn't even read the file, so nothing ran. Put the bracket back.</p><table class="rec"><tr><th>Last line says</th><th>Usually means</th><th>Fix</th></tr><tr><td><code>No such file or directory</code></td><td>You're in the wrong folder.</td><td><code>pwd</code>, then <code>cd</code> into the week folder.</td></tr><tr><td><code>ModuleNotFoundError</code></td><td>You ran <code>python</code> instead of <code>uv run</code>.</td><td>Use <code>uv run file.py</code>.</td></tr><tr><td><code>NameError</code></td><td>A name is misspelt, or used before it's set.</td><td>Check the spelling on that line.</td></tr><tr><td><code>IndentationError</code></td><td>The indents don't line up.</td><td>Line it up with its neighbours.</td></tr><tr><td><code>KeyError</code></td><td>A dict doesn't have that label.</td><td>Check the label's spelling.</td></tr><tr><td><code>AuthenticationError … 401</code></td><td>The API key is missing or wrong.</td><td>Expected until Saturday; then fix <code>.env</code>.</td></tr></table><div class="expected"><span class="lbl">Expected</span>You broke it twice, read both errors from the bottom up, and put it back. The script runs again.</div></li><li class="step" id="git"><div class="head"><span class="num">8</span><h3>Git: save points for your work</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Git keeps a history of a folder. A <b>commit</b> is a save point with a message. Four commands cover Saturday: <code>git status</code> (what changed?), <code>git diff</code> (exactly what?), <code>git add</code> (include this in the next save point) and <code>git commit</code> (save it).</p><p>You changed the script in step 5. Look, then undo it:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>git status
+git diff
+git restore bridge0_python.py</code></pre></div><p><code>git diff</code> shows removed lines in red and added lines in green. If it fills the screen, press <b>q</b> to leave. Now make a first commit of your own. In VS Code choose <b>File › New File</b>, type one line, such as <i>What I want from this course: …</i>, and save it as <code>my-notes.md</code> in the week folder. Then:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>git add my-notes.md
+git commit -m &quot;My first commit&quot;
+git log --oneline -3</code></pre></div><p>Your commit stays on your laptop for now. <b>Pushing</b> sends commits to GitHub. You do that when you hand in, on your own private repo: the <a href="handin.html">hand-in page</a> shows how.</p><div class="expected"><span class="lbl">Expected</span><code>git status</code> is clean after the restore, and <code>git log</code> shows “My first commit” at the top.</div></li><li class="step" id="env"><div class="head"><span class="num">9</span><h3>What .env is, and why git never sees it</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p><code>.env</code> is a small settings file of <code>NAME=value</code> lines. Your copy holds your class key. The labs read it with two lines at the top:</p><div class="block"><div class="bar"><span>lab1_first_call.py</span></div><pre><code>load_dotenv()          # reads ANTHROPIC_API_KEY (+ optional ANTHROPIC_BASE_URL) from .env
+client = Anthropic()   # picks the key up from the environment</code></pre></div><p>The repo's <code>.gitignore</code> tells git never to track it. Check that for yourself:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>git check-ignore -v .env</code></pre></div><p><span class="warn">Your key is a password and a bill.</span> It goes in <code>.env</code> and nowhere else: never in code, a chat, a screenshot or a commit. You'll get it on a printed slip at <b>09:30 on Saturday</b>.</p><div class="expected"><span class="lbl">Expected</span><code>.gitignore:2:.env</code> followed by <code>.env</code>: git will never commit that file.</div></li></ol>
+<div class="box quick"><h3>Quick check</h3><p class="small">Answer in your head or on paper first, then open the answer. Not graded. If one surprises you, ask in <b>the cohort WhatsApp group</b>.</p><ol><li><p>You type <code>uv run lab1_first_call.py</code> and get “No such file or directory”. What do you check first?</p><details class="answer"><summary>Answer</summary><p>Which folder you're in. Run <code>pwd</code>, then <code>cd</code> into <code>week1-llm-foundations</code>.</p></details></li><li><p>What does <code>range(1, 4)</code> give you?</p><details class="answer"><summary>Answer</summary><p>1, 2 and 3. It stops before the end.</p></details></li><li><p>An error ends with <code>KeyError: 'hihg'</code>. What does it mean, and where's the line to fix?</p><details class="answer"><summary>Answer</summary><p>The dict has no label <code>'hihg'</code>. The <code>File … line …</code> lines just above it tell you where.</p></details></li><li><p>Why does every lab pick the answer by block type, not <code>content[0]</code>?</p><details class="answer"><summary>Answer</summary><p>The first block may be the model's thinking. Picking by type always finds the text.</p></details></li><li><p>Where does your class key go, and where must it never go?</p><details class="answer"><summary>Answer</summary><p>In <code>.env</code> only. Never in code, a chat, a screenshot or git.</p></details></li></ol></div>
+<h2>If something goes wrong</h2><details><summary><code>git pull</code> says your local changes would be overwritten</summary><p>You changed a course file. Put your change aside, pull, then bring it back:</p><div class="block"><div class="bar"><span>Terminal</span><button class="copy" type="button">Copy</button></div><pre><code>git stash
+git pull
+git stash pop</code></pre></div></details><details><summary>“fatal: not a git repository”</summary><p>You're outside the repo. Run <code>cd AIEngineeringLab/week1-llm-foundations</code> from the folder you cloned into.</p></details><details><summary>“Author identity unknown” when you commit</summary><p>Git doesn't know who you are yet. Do <a href="setup.html#git">setup step 2</a>, then commit again.</p></details><details><summary><code>git diff</code> or <code>git log</code> fills the screen and won't go away</summary><p>It's showing one page at a time. Press <b>q</b> to leave.</p></details><details><summary>“uv” is not recognized</summary><p>Go back to <a href="setup.html#uv">setup step 4</a>, then close and reopen VS Code.</p></details>
+<div class="box"><h3>Go deeper (all free, all official)</h3><ul><li><a href="https://docs.python.org/3/tutorial/introduction.html">Python tutorial, chapter 3</a>: numbers, text and lists, typed straight into Python</li><li><a href="https://docs.python.org/3/tutorial/controlflow.html">Python tutorial, chapter 4</a>: <code>if</code>, <code>for</code>, <code>range</code> and functions</li><li><a href="https://docs.python.org/3/tutorial/datastructures.html">Python tutorial, chapter 5</a>: lists and dicts in depth</li><li><a href="https://docs.python.org/3/tutorial/errors.html">Errors and exceptions</a>: what a traceback is telling you</li><li><a href="https://code.visualstudio.com/docs/terminal/basics">VS Code: terminal basics</a>: the terminal inside VS Code</li><li><a href="https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository">Pro Git, chapter 2</a>: status, add, commit, log and undoing things</li><li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/JSON">MDN: Working with JSON</a>: the format every API speaks</li></ul></div>
+<div class="next"><span><b>Done?</b> Post “Bridge 0 done” in the group, or the step number that stopped you.</span><span class="links"><a href="setup.html">← Setup</a> · <a href="index.html">Week 1 home</a> · <a href="lab1-first-call.html"><b>Preview Lab 1 →</b></a></span></div>
+<footer><span>AI Engineering Programme · Week 1 · Bridge 0. Your ticks and notes stay in this browser only.</span>
+<button type="button" class="reset">Reset this page</button></footer>
+</main><script>
+(function(){
+  var KEY=document.body.getAttribute('data-guide');
+  function load(k,f){try{var v=localStorage.getItem(KEY+':'+k);return v===null?f:JSON.parse(v);}catch(e){return f;}}
+  function save(k,v){try{localStorage.setItem(KEY+':'+k,JSON.stringify(v));}catch(e){}}
+  // Windows / macOS
+  var plat=(navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent;
+  var detected=/mac|iphone|ipad/i.test(plat)?'mac':'win';
+  var osBtns=document.querySelectorAll('.os button');
+  function setOS(os){document.body.setAttribute('data-os',os);osBtns.forEach(function(b){b.setAttribute('aria-pressed',String(b.value===os));});save('os',os);}
+  osBtns.forEach(function(b){b.addEventListener('click',function(){setOS(b.value);});});
+  setOS(load('os',detected));
+  // copy buttons
+  function copyText(t){
+    if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
+    return new Promise(function(res,rej){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();try{document.execCommand('copy')?res():rej();}catch(e){rej(e);}document.body.removeChild(ta);});
+  }
+  document.querySelectorAll('.block').forEach(function(b){
+    var btn=b.querySelector('.copy'),pre=b.querySelector('pre');if(!btn||!pre)return;
+    btn.addEventListener('click',function(){copyText(pre.textContent.replace(/\n+$/,'')).then(function(){
+      btn.textContent='Copied';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied');},1500);
+    },function(){btn.textContent='Select and copy';});});
+  });
+  // step ticks + progress
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  var done=load('done',{});
+  var ptext=document.querySelector('.ptext'),dots=document.querySelector('.progress');
+  var core=steps.filter(function(s){return !s.classList.contains('stretch');});
+  var links=steps.map(function(s){var a=document.createElement('a');a.href='#'+s.id;a.title=s.querySelector('h3').textContent;
+    if(s.classList.contains('stretch'))a.className='stretch';dots.insertBefore(a,ptext);return a;});
+  function paint(){
+    var n=0;steps.forEach(function(s,i){var on=!!done[s.id];s.classList.toggle('done',on);s.querySelector('.donebox input').checked=on;
+      links[i].classList.toggle('on',on);if(on&&!s.classList.contains('stretch'))n++;});
+    ptext.textContent=n+' of '+core.length+' done';
+  }
+  steps.forEach(function(s){s.querySelector('.donebox input').addEventListener('change',function(e){done[s.id]=e.target.checked;save('done',done);paint();});});
+  paint();
+  // note fields
+  document.querySelectorAll('[data-note]').forEach(function(inp){var k='note:'+inp.getAttribute('data-note');inp.value=load(k,'');
+    inp.addEventListener('input',function(){save(k,inp.value);});});
+  // reset
+  var r=document.querySelector('.reset');if(r)r.addEventListener('click',function(){
+    if(!confirm('Clear your ticks and notes on this page?'))return;
+    try{Object.keys(localStorage).forEach(function(k){if(k.indexOf(KEY+':')===0)localStorage.removeItem(k);});}catch(e){}
+    done={};document.querySelectorAll('[data-note]').forEach(function(i){i.value='';});paint();});
+})();
+</script></body></html>

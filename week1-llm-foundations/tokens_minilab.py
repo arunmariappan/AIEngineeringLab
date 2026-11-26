@@ -11,7 +11,8 @@ client = Anthropic()
 
 MODEL = "claude-haiku-5-5"
 
-# Same meaning in each language. Add your own language - and fix any line you read better than we do.
+# Same meaning in each language.
+# EXTEND: add your own language as a new line - and fix any line you read better than we do.
 SENTENCES = {
     "English": "Please reset my password; I have not been able to log in since this morning.",
     "Hindi":   "कृपया मेरा पासवर्ड रीसेट करें; मैं आज सुबह से लॉग इन नहीं कर पा रहा हूँ।",

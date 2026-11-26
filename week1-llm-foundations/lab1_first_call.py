@@ -37,6 +37,8 @@ def ask(prompt: str, effort: str = "low"):
 
 
 if __name__ == "__main__":
+    # CHANGE ME (Lab 1, step 4): swap this prompt for one from your job, e.g.
+    #   "Summarise this alert in one line: disk usage on db-01 is 91% and rising."
     tagline = "Give me a one-sentence tagline for a coffee shop that only sells cold brew."
 
     print("### Part 1 - same prompt, three runs. Expect three different answers.\n")
@@ -51,11 +53,14 @@ if __name__ == "__main__":
     )
     for effort in ("low", "medium", "high"):
         answer, message, seconds = ask(question, effort=effort)
-        print(f"--- effort={effort}: {message.usage.output_tokens} output tokens, {seconds:.1f}s ---")
+        print(f"--- effort={effort}: {message.usage.output_tokens} output tokens, {seconds:.1f}s, "
+              f"stop_reason={message.stop_reason} ---")
         print(f"{answer}\n")
 
-    # STRETCH (try it, then read the error):
-    #   add  temperature=0  to the create() call above.
+    # EXTEND (Lab 1, steps 6-7):
+    #   a) add  temperature=0,  as a new line inside the create() call above, run, and read the error.
+    #   b) set  max_tokens=20  and run again: stop_reason turns into "max_tokens". Put 1024 back after.
+    # About (a):
     #   You'll get a TypeError before any request is sent: the current SDK doesn't
     #   even have the parameter, and Haiku 5.5's docs say to leave sampling settings
     #   out. You cannot opt out of variance - which is exactly why, from Week 2,

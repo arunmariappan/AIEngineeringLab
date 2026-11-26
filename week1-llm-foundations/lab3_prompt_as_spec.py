@@ -39,11 +39,12 @@ def triage(ticket: str) -> str:
 
 
 if __name__ == "__main__":
+    # EXTEND (Lab 3): try a ticket with no clues, or one that gives orders. The exercise page has both.
     ticket = (
         "Hi - since last night's deploy the Export button on the reports page "
         "throws a 500 for every user on our paid plan. It's blocking month-end "
         "reporting for finance. Please help ASAP."
     )
     print(triage(ticket))
-    # Now: edit prompts/extract_ticket.md, re-run, and `git diff prompts/`.
+    # CHANGE ME is in prompts/extract_ticket.md, not here: edit it, re-run, then `git diff prompts/`.
     # The prompt change shows up as a reviewable diff - because it's source code.
