@@ -1,8 +1,8 @@
 """Lab 1: Your first LLM call.
 
 Part 1 - run the same prompt three times and watch the answer change.
-Part 2 - turn the one knob you do get on this model, `effort`, and watch
-         tokens, seconds and the answer change with it.
+Part 2 - turn the one knob you do get on this model, `effort`, on a question
+         that takes a few steps, and watch thinking tokens, seconds and the answer.
 """
 import time
 
@@ -41,20 +41,23 @@ if __name__ == "__main__":
     #   "Summarise this alert in one line: disk usage on db-01 is 91% and rising."
     tagline = "Give me a one-sentence tagline for a coffee shop that only sells cold brew."
 
-    print("### Part 1 - same prompt, three runs. Expect three different answers.\n")
+    print("### Part 1 - same prompt, three runs. Are they all the same?\n")
     for run in range(1, 4):
         answer, _, _ = ask(tagline)
         print(f"--- run {run} ---\n{answer}\n")
 
-    print("### Part 2 - same question, three effort levels. Watch tokens and seconds.\n")
+    print("### Part 2 - same question, three effort levels. Watch thinking tokens and seconds.\n")
     question = (
-        "A train leaves at 09:40 and arrives at 13:15. It stops for 25 minutes "
-        "on the way. How long was it actually moving? Answer in one line."
+        "A web service gets 1,200 requests a minute at 09:00. Every hour, traffic is 15% "
+        "higher than the hour before. One server handles 500 requests a minute. "
+        "How many servers are needed at 13:00? Answer in one line."
     )
     for effort in ("low", "medium", "high"):
         answer, message, seconds = ask(question, effort=effort)
-        print(f"--- effort={effort}: {message.usage.output_tokens} output tokens, {seconds:.1f}s, "
-              f"stop_reason={message.stop_reason} ---")
+        details = message.usage.output_tokens_details
+        thinking = details.thinking_tokens if details else 0
+        print(f"--- effort={effort}: {message.usage.output_tokens} output tokens "
+              f"(thinking {thinking}), {seconds:.1f}s, stop_reason={message.stop_reason} ---")
         print(f"{answer}\n")
 
     # EXTEND (Lab 1, steps 6-7):

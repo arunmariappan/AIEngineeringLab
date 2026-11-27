@@ -15,7 +15,7 @@ Every lab runs the same way: **run it → read it → change it → extend it**.
 
 | When | File | What you'll see |
 |---|---|---|
-| 10:40 | `lab1_first_call.py` | Same prompt, three different answers, and the `effort` knob |
+| 10:40 | `lab1_first_call.py` | Same prompt three times (are they the same?), and the `effort` knob with thinking tokens |
 | ~11:14 | `tokens_minilab.py` | The same sentence in English, Hindi, Kannada and Tamil, counted |
 | 11:41 | `lab2_cost.py` | The receipt (`usage`), cost per call and per month, the 100K cliff. Saves `results/week1_cost.txt` |
 | 12:10 | `lab3_prompt_as_spec.py` | Your prompt as a versioned file you can `git diff` |
