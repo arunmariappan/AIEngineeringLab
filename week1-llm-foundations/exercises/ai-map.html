@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The AI map</title><style>
+:root{--ink:#0D1B2A;--muted:#5B6B7A;--teal:#00808A;--teal-g:#00A9B5;--gold:#9A6700;--gold-g:#E3A81B;
+--coral:#B4432F;--rule:#D9E0E6;--band:#F2F7F8;--code:#F1F4F6;--ph-bg:#FFE97A;--ph-fg:#6B4500;--bg:#FFFFFF}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Calibri,"Segoe UI",system-ui,-apple-system,sans-serif}
+body[data-os="win"] .mac-only,body[data-os="mac"] .win-only{display:none}
+.wrap{max-width:880px;margin:0 auto;padding:28px 16px 72px}
+.top{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);border-bottom:1px solid var(--rule)}
+.top .in{max-width:880px;margin:0 auto;padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.brand{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--teal);text-transform:uppercase;margin-right:auto}
+.progress{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.progress a{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--teal);display:inline-block}
+.progress a.on{background:var(--teal)}
+.progress a.stretch{border-style:dashed}
+.ptext{font-size:13px;color:var(--muted);min-width:84px}
+.os{display:inline-flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden}
+.os button{border:0;background:none;padding:4px 12px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer}
+.os button[aria-pressed="true"]{background:var(--teal);color:#fff}
+.rule{width:44px;height:4px;background:var(--teal-g);margin:18px 0 12px}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.16em;color:var(--teal);text-transform:uppercase}
+h1{font:400 38px/1.15 Georgia,"Times New Roman",serif;margin:6px 0 10px}
+h2{font:400 26px/1.2 Georgia,serif;margin:44px 0 12px}
+h3{font:700 19px/1.3 Georgia,serif;margin:0}
+.lede{font-size:19px;color:var(--muted);margin:0 0 18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 22px;padding:0;list-style:none;font-size:15px}
+.meta b{color:var(--teal);font-weight:700;letter-spacing:.06em;font-size:12px;text-transform:uppercase;margin-right:6px}
+.notice{border-left:5px solid var(--gold-g);background:var(--band);padding:14px 18px;margin:18px 0}
+.notice .lab{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.notice .big{font:400 26px/1.25 Georgia,serif;color:var(--teal);margin:4px 0}
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.step{border:1px solid var(--rule);padding:18px 20px 16px 20px;margin:14px 0;position:relative;scroll-margin-top:70px}
+.step.done{border-left:5px solid var(--teal-g);padding-left:16px}
+.step.done h3{color:var(--muted)}
+.step.stretch{border-style:dashed}
+.head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;font:700 15px/30px Calibri,"Segoe UI",system-ui,sans-serif;text-align:center}
+.step.stretch .num{background:#fff;color:var(--teal);border:1.5px dashed var(--teal);line-height:27px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:1px 8px;margin-left:4px}
+.donebox{margin-left:auto;font-size:14px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer;white-space:nowrap}
+.donebox input{width:18px;height:18px;accent-color:var(--teal)}
+.step p{margin:8px 0}
+.block{border:1px solid var(--rule);background:var(--code);margin:10px 0}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 4px 12px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);letter-spacing:.06em}
+.copy{border:1px solid var(--rule);background:#fff;border-radius:4px;font:inherit;font-size:12px;padding:2px 10px;cursor:pointer;color:var(--teal)}
+.copy.copied{background:var(--teal);color:#fff;border-color:var(--teal)}
+pre{margin:0;padding:12px 14px;overflow-x:auto;font:14.5px/1.5 Consolas,"SF Mono",Menlo,monospace;white-space:pre}
+pre.wrap{white-space:pre-wrap;overflow-wrap:anywhere}
+code{font-family:Consolas,"SF Mono",Menlo,monospace;font-size:.92em;background:var(--code);padding:1px 4px}
+pre code{background:none;padding:0;font-size:inherit}
+.expected{background:var(--band);border-left:4px solid var(--teal-g);padding:8px 14px;margin:12px 0 2px;font-size:15.5px}
+.expected .lbl{display:block;font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--teal);text-transform:uppercase}
+.ph{background:var(--ph-bg);color:var(--ph-fg);font-weight:700;padding:0 3px}
+.warn{color:var(--coral);font-weight:700}
+table.rec{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}
+table.rec th{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule)}
+table.rec td{padding:4px 8px;border-bottom:1px solid var(--rule)}
+table.rec input{width:100%;font:inherit;border:1px solid var(--rule);padding:4px 6px}
+details{border:1px solid var(--rule);margin:8px 0;padding:0 14px}
+details summary{cursor:pointer;padding:10px 0;font-weight:700}
+details[open]{padding-bottom:10px}
+details.answer{border-style:dashed}
+.next{margin-top:36px;padding:14px 18px;border:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.next .links{white-space:nowrap;margin-left:auto}
+.brand a{color:inherit;text-decoration:none}
+table.rec td.when{white-space:nowrap;color:var(--muted);width:1%}
+.box{border:1px solid var(--rule);padding:12px 18px;margin:16px 0}
+.box h3{margin-bottom:6px}
+.box ul{margin:6px 0;padding-left:22px}
+.box ol{margin:6px 0;padding-left:22px}
+.box li{margin:4px 0}
+.quick{border-left:5px solid var(--coral)}
+.quick h3{color:var(--coral)}
+.quick li p{margin:6px 0 2px}
+.small{font-size:14.5px;color:var(--muted)}
+.tag.phase{color:var(--muted);border-color:var(--rule)}
+table.rec td code{white-space:nowrap}
+a{color:var(--teal)}
+footer{margin-top:48px;padding-top:12px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer button{border:1px solid var(--rule);background:#fff;font:inherit;font-size:13px;padding:3px 10px;cursor:pointer;color:var(--muted)}
+@media (max-width:600px){h1{font-size:30px}.step{padding:14px}.donebox span{display:none}}
+@media print{.top,.copy,footer button,.os{display:none}.step{break-inside:avoid}body[data-os] .win-only,body[data-os] .mac-only{display:block}}
+
+.nest{margin:12px 0 6px}
+.ring{border:1px solid var(--rule);border-radius:8px;padding:8px 12px 12px;margin-top:8px;background:#fff}
+.nest>.ring{margin-top:0}
+.ring .nm{font:700 17px/1.3 Georgia,serif}
+.ring .eg{font-style:italic;color:var(--muted);font-size:14.5px;margin-left:8px}
+.ring.gen{border:2px solid var(--gold-g)}.ring.gen>.nm{color:var(--gold)}
+.ring.llm{border:2px solid var(--teal-g);background:var(--band)}.ring.llm>.nm{color:var(--teal);font-size:20px}
+.ring .here{font-size:13px;font-weight:700;color:var(--teal);margin-left:8px;letter-spacing:.04em}
+.layer{border:1px solid var(--rule);border-left:5px solid var(--rule);padding:10px 16px 8px;margin:12px 0}
+.layer.gen{border-left-color:var(--gold-g)}.layer.llm{border-left-color:var(--teal-g);background:var(--band)}
+.layer.agent{border-style:dashed;border-left-style:solid;border-left-color:#A78BFA}
+.layer h4{font:700 18px/1.3 Georgia,serif;margin:0}.layer.gen h4{color:var(--gold)}.layer.llm h4{color:var(--teal)}
+.layer .sub{font-size:13.5px;color:var(--muted);margin:0 0 4px}
+.layer p{margin:5px 0}
+.layer .k{color:var(--teal);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-right:6px}
+ol.time{list-style:none;padding:0 0 0 2px;margin:10px 0;border-left:2px solid var(--rule)}
+ol.time li{position:relative;padding:2px 0 12px 20px}
+ol.time li:before{content:"";position:absolute;left:-8px;top:9px;width:13px;height:13px;border-radius:50%;background:var(--teal-g)}
+ol.time li.gold:before{background:var(--gold-g)}
+ol.time .yr{font:700 17px Georgia,serif;color:var(--teal);margin-right:8px}
+dl.words{margin:6px 0}dl.words dt{font-weight:700;margin-top:10px}dl.words dd{margin:2px 0 0 0}
+@media (max-width:600px){.ring{padding:6px 8px 10px}.ring .eg{display:block;margin-left:0}}
+</style></head>
+<body data-guide="aie-w1-aimap" data-os="win">
+<div class="top"><div class="in"><span class="brand"><a href="index.html">AI Engineering · Week 1</a> · The AI map</span>
+<span class="progress"><span class="ptext"></span></span>
+<span class="os" role="group" aria-label="Your computer"><button type="button" value="win">Windows</button><button type="button" value="mac">macOS</button></span></div></div>
+<main class="wrap">
+<div class="rule"></div><div class="kicker">Week 1 · Topic 1 companion · about 20 min</div>
+<h1>The AI map</h1><p class="lede">AI, machine learning, deep learning, generative AI and LLMs: what each one is, how it works, and where you've already met it. Topic 1's picture and table, with more detail and free links to go deeper.</p>
+<ul class="meta"><li><b>Read it</b>any time: as a preview, or after Saturday to look back at Topic 1</li><li><b>Needs</b>nothing: no key, no code, no terminal</li><li><b>Questions</b>in the cohort WhatsApp group</li></ul>
+
+<div class="notice"><div class="lab">The one idea</div><div class="big">Each box sits inside the one around it.</div>Every LLM is also generative AI, deep learning, machine learning and AI, all at once. This course works in the smallest box: building applications on LLMs. You won't train a model.</div>
+
+<ol class="steps"><li class="step" id="family"><div class="head"><span class="num">1</span><h3>The family in one picture</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>Read it from the outside in, like <i>vehicle → car → electric car → one particular model</i>.</p><div class="nest"><div class="ring "><span class="nm">AI</span><span class="eg">e.g. a chess engine, a route planner</span><div class="ring "><span class="nm">Machine learning</span><span class="eg">e.g. your spam filter</span><div class="ring "><span class="nm">Deep learning</span><span class="eg">e.g. face unlock</span><div class="ring gen"><span class="nm">Generative AI</span><span class="eg">e.g. image generators</span><div class="ring llm"><span class="nm">LLMs</span><span class="here">★ you are here</span><br>ChatGPT · Claude · Gemini<br><i class="small">This course: building applications on them.</i></div></div></div></div></div></div><p><span class="small">One example in each box. The next section says what each one does.</span></p><div class="expected"><span class="lbl">Take away</span>An LLM is all five at once: AI, machine learning, deep learning, generative AI, and a language model.</div></li><li class="step" id="each"><div class="head"><span class="num">2</span><h3>What each one does, how it works, and where you've met it</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><div class="layer "><h4>AI</h4><p class="sub">the umbrella · a field since 1956</p><p><span class="k">What it does</span>Computers doing tasks that usually need human thinking: reasoning, perceiving, deciding.</p><p><span class="k">How it works</span>Two families of method. Early AI used rules a person wrote, and search: trying many possible moves and picking the best. Most AI today learns from data instead; that's every layer below.</p><p><span class="k">You've met it</span>Chess engines, the shortest route in a maps app, characters in games.</p><p><span class="k">At your work</span>Rule-based chatbots and “expert systems”, and everything in the layers below.</p></div><div class="layer "><h4>Machine learning</h4><p class="sub">part of AI · named in 1959</p><p><span class="k">What it does</span>Learns patterns from examples instead of hand-written rules, and gets better with more data.</p><p><span class="k">How it works</span>You show it many examples with the right answer (spam, not spam) and it finds the pattern itself. It comes in three flavours: learning from labelled examples, finding groups or oddities without labels, and learning by trial and reward.</p><p><span class="k">You've met it</span>The spam folder, “you may also like”, your bank's “was this you?” fraud alert.</p><p><span class="k">At your work</span>Alarms that learn a metric's normal daily pattern and flag the odd spike (AWS CloudWatch's anomaly detection is one); traffic forecasts for capacity planning; auto-tagging tickets.</p></div><div class="layer "><h4>Deep learning</h4><p class="sub">part of machine learning · took off in 2012</p><p><span class="k">What it does</span>Machine learning with many-layered neural networks. It learns straight from photos, sound and raw text.</p><p><span class="k">How it works</span>A neural network is layers of very simple maths units, each with adjustable numbers. Training nudges the numbers to make fewer mistakes, and each layer learns something a little more abstract than the one before: edges, then shapes, then faces. It needs lots of data and powerful chips (GPUs).</p><p><span class="k">You've met it</span>Face unlock, voice typing, translation, searching your photos for “beach”.</p><p><span class="k">At your work</span>Transcribing support calls, reading scanned forms (OCR), spotting defects in camera images on a production line.</p></div><div class="layer gen"><h4>Generative AI</h4><p class="sub">part of deep learning · mainstream since 2022</p><p><span class="k">What it does</span>Creates new content (text, images, code, audio) instead of only sorting or scoring.</p><p><span class="k">How it works</span>Trained on huge amounts of data, it learns the patterns well enough to produce new examples of them. Most are <i>foundation models</i>: trained once on broad data, then used for many different tasks.</p><p><span class="k">You've met it</span>ChatGPT and Claude writing, image generators, AI voices.</p><p><span class="k">At your work</span>Drafting a status update, generating test data, suggesting code.</p></div><div class="layer llm"><h4>LLM: large language model</h4><p class="sub">the part of generative AI that writes text</p><p><span class="k">What it does</span>A huge model trained on vast amounts of text to predict the next <i>token</i> (a chunk of a word). It's the engine inside ChatGPT, Claude and Gemini.</p><p><span class="k">How it works</span>It guesses the next token, adds it, and guesses again. It's trained first to predict text, then to follow instructions. It predicts what sounds right, not what is true: it isn't looking anything up.</p><p><span class="k">You've met it</span>Chat assistants, “summarise this” buttons, smart replies.</p><p><span class="k">At your work</span>Summarising an incident timeline, triaging a ticket (that's Lab 3), explaining a runbook. <b>This course works here.</b></p></div><div class="layer agent"><h4>Next level up: the agent</h4><p class="sub">an LLM with tools and a loop · Weeks 4–5</p><p><span class="k">What it does</span>Does a whole job, not just one answer.</p><p><span class="k">How it works</span>It plans a step, uses a tool (search, run a command, query a database), reads the result, and repeats until the job is done. A person approves the risky steps.</p><p><span class="k">You've met it</span>Coding agents such as Claude Code and Copilot's agent mode (Topic 7's live demo).</p><p><span class="k">At your work</span>An on-call helper that reads the logs and suggests the next check. You'll build one in Week 4.</p></div><div class="expected"><span class="lbl">Take away</span>People write rules. Machine learning finds its own rules in examples. Deep learning does that on photos, sound and raw text. Generative AI makes new things. An LLM is the one that writes text.</div></li><li class="step" id="sort"><div class="head"><span class="num">3</span><h3>Rules, patterns or next words? Sort these six</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><p>For each one, decide which box it belongs in before you open the answer.</p><details class="answer"><summary>“If disk usage is over 90%, page the on-call.”</summary><p><b>Plain software, not AI.</b> One rule a person wrote: same input, same output, every time. Exactly right for alerting.</p></details><details class="answer"><summary>“Flag a login from a new country at 3 am as suspicious, based on millions of past logins.”</summary><p><b>Machine learning.</b> Nobody wrote that rule; the system learned what normal looks like from examples.</p></details><details class="answer"><summary>“Turn this recorded support call into text.”</summary><p><b>Deep learning</b> (speech-to-text). Neural networks learned to hear words in raw sound.</p></details><details class="answer"><summary>“Write a polite reply to this angry customer email.”</summary><p><b>Generative AI, and specifically an LLM.</b> It creates new text, one token at a time.</p></details><details class="answer"><summary>“Find the fastest route to the data centre.”</summary><p><b>Classic AI: search</b>, trying routes and picking the best, helped by machine learning that predicts the traffic.</p></details><details class="answer"><summary>“Answer questions from a 200-page datasheet.”</summary><p><b>An LLM plus retrieval (RAG):</b> find the right pages first, then answer from them. That's Week 3.</p></details><div class="expected"><span class="lbl">Take away</span>Real systems mix all three: rules where you need certainty, an LLM where you need language, and tests around both.</div></li><li class="step" id="when"><div class="head"><span class="num">4</span><h3>When each one arrived</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><ol class="time"><li class=""><span class="yr">1956</span>AI becomes a field, at a summer workshop at Dartmouth College in the USA. The name “artificial intelligence” comes from the proposal for it.</li><li class=""><span class="yr">1959</span>Arthur Samuel at IBM names <b>machine learning</b>: his checkers program got better by playing against itself.</li><li class=""><span class="yr">2012</span><b>Deep learning</b> wins the ImageNet picture-recognition contest by a wide margin (a network called AlexNet), and the boom starts.</li><li class=""><span class="yr">2017</span>Researchers at Google publish the <b>Transformer</b> (“Attention Is All You Need”): the design behind today's LLMs.</li><li class="gold"><span class="yr">2022</span><b>ChatGPT</b> launches on 30 November. Generative AI goes mainstream.</li><li class=""><span class="yr">2025</span><b>Coding agents:</b> Anthropic's Claude Code becomes generally available in May. You'll see it in Topic 7, and build an agent of your own in Weeks 4–5.</li></ol><div class="expected"><span class="lbl">Take away</span>The inner box is young: ChatGPT turns four on 30 November 2026.</div></li><li class="step" id="words"><div class="head"><span class="num">5</span><h3>More words you'll hear</h3><label class="donebox"><input type="checkbox"><span>Done</span></label></div><dl class="words"><dt>Token</dt><dd>A chunk of text, about 4 characters in English. Models read, write, bill and limit in tokens (Topic 3).</dd><dt>Parameters</dt><dd>The adjustable numbers inside a model. Training sets them; your questions don't change them.</dd><dt>Training vs using</dt><dd>Training builds the model once, over months, at huge cost. Using it (called <i>inference</i>) is every question you send.</dd><dt>Fine-tuning</dt><dd>Extra training on your own examples to specialise a model. This course doesn't do it: better prompts and retrieval come first.</dd><dt>Prompt</dt><dd>The instructions and text you send the model (Topic 6).</dd><dt>Context window</dt><dd>Everything the model can see in one call. It starts empty on every call (Topic 3).</dd><dt>Hallucination</dt><dd>A fluent, confident, wrong answer (Topic 6).</dd><dt>Foundation model</dt><dd>One big model trained on broad data, then used for many tasks.</dd><dt>Multimodal</dt><dd>Reads (or writes) more than text, such as images and audio. Claude can read images.</dd><dt>Open-weight</dt><dd>A model whose trained numbers you can download and run yourself. Read its licence first.</dd><dt>GPU</dt><dd>A chip that does many calculations at once. Models are trained and run on GPUs and similar chips.</dd><dt>RAG</dt><dd>Retrieval-augmented generation: find the relevant text first, then answer from it (Week 3).</dd><dt>Agent</dt><dd>An LLM that uses tools in a loop until a job is done (Weeks 4–5).</dd></dl><div class="expected"><span class="lbl">Take away</span>No need to memorise these: come back when a word stops you. The deck's last pages have the course glossary.</div></li></ol>
+<div class="box quick"><h3>Quick check</h3><p class="small">Answer in your head or on paper first, then open the answer. Not graded. If one surprises you, ask in <b>the cohort WhatsApp group</b>.</p><ol><li><p>Is a spam filter generative AI?</p><details class="answer"><summary>Answer</summary><p>No. It's machine learning: it sorts emails into spam or not spam. It doesn't create anything.</p></details></li><li><p>An alert fires when CPU is over 90% for five minutes. Is that AI?</p><details class="answer"><summary>Answer</summary><p>No. One rule a person wrote is plain software: same input, same output, every time.</p></details></li><li><p>Why can an LLM sound confident and still be wrong?</p><details class="answer"><summary>Answer</summary><p>It predicts what sounds right, not what is true. It isn't looking anything up.</p></details></li><li><p>Which box does Lab 3's ticket triage belong in?</p><details class="answer"><summary>Answer</summary><p>The innermost one: an LLM reads the ticket and writes three lines back.</p></details></li></ol></div>
+
+<div class="box"><h3>Questions people ask</h3><details><summary>“Is ChatGPT AI or machine learning?”</summary><p>Both, and more. It's an app built on an LLM, the innermost box, so it's also generative AI, deep learning, machine learning and AI.</p></details><details><summary>“Does it learn from what I type?”</summary><p>Not while it answers you: its numbers are fixed. Whether a company later trains new models on your chats depends on its terms and your settings. Check before you paste anything sensitive, and never paste passwords, keys or client data.</p></details><details><summary>“What's AGI?”</summary><p>Artificial general intelligence: a hypothetical AI as capable as people at most tasks. Nobody agrees on a definition or a date, and nothing in this course depends on it.</p></details><details><summary>“Does it understand?”</summary><p>It predicts text extremely well. Whether that counts as understanding is debated; in this course we judge it by what it does, and we measure that.</p></details><details><summary>“Will AI take my job?”</summary><p>It changes jobs. Someone still has to decide what the AI should do and check what it did, and that's the skill this course practises.</p></details><details><summary>“Are the boxes exact?”</summary><p>They're a simplification that works. Some generative models came before deep learning, today's LLMs also read images, and some AI never learns at all.</p></details></div><div class="box"><h3>Go deeper (free)</h3><ul><li><a href="https://www.elementsofai.com/">Elements of AI</a>: a free online course for non-experts from the University of Helsinki: the best next step if you want more</li><li><a href="https://www.ibm.com/think/topics/ai-vs-machine-learning-vs-deep-learning-vs-neural-networks">AI vs. machine learning vs. deep learning vs. neural networks</a>: IBM's explainer of the same nesting, one level deeper</li><li><a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">Intro to Large Language Models</a>: Andrej Karpathy's one-hour talk for a general audience: how LLMs are trained and used</li><li><a href="https://www.3blue1brown.com/topics/neural-networks">Neural networks, by 3Blue1Brown</a>: short videos that draw what a neural network is and how it learns; a little maths, very clearly shown</li><li><a href="https://jalammar.github.io/illustrated-transformer/">The Illustrated Transformer</a>: for the curious: the design behind today's LLMs, in pictures (technical)</li><li><a href="https://developers.google.com/machine-learning/crash-course">Machine Learning Crash Course</a>: Google's free hands-on course, for anyone who wants the maths behind the middle boxes</li><li><a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a>: Anthropic on the next level up: read it before Week 4</li><li><a href="https://oecd.ai/en/wonk/ai-system-definition-update">What counts as an AI system</a>: the OECD definition governments use, explained</li></ul></div>
+<div class="next"><span><b>Read it?</b> Post one example from your own work for any box in the group.</span><span class="links"><a href="python-basics.html">← Python from zero</a> · <a href="index.html">Week 1 home</a> · <a href="lab1-first-call.html"><b>Lab 1 →</b></a></span></div>
+<footer><span>AI Engineering Programme · Week 1 · The AI map. Your ticks and notes stay in this browser only.</span>
+<button type="button" class="reset">Reset this page</button></footer>
+</main><script>
+(function(){
+  var KEY=document.body.getAttribute('data-guide');
+  function load(k,f){try{var v=localStorage.getItem(KEY+':'+k);return v===null?f:JSON.parse(v);}catch(e){return f;}}
+  function save(k,v){try{localStorage.setItem(KEY+':'+k,JSON.stringify(v));}catch(e){}}
+  // Windows / macOS
+  var plat=(navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent;
+  var detected=/mac|iphone|ipad/i.test(plat)?'mac':'win';
+  var osBtns=document.querySelectorAll('.os button');
+  function setOS(os){document.body.setAttribute('data-os',os);osBtns.forEach(function(b){b.setAttribute('aria-pressed',String(b.value===os));});save('os',os);}
+  osBtns.forEach(function(b){b.addEventListener('click',function(){setOS(b.value);});});
+  setOS(load('os',detected));
+  // copy buttons
+  function copyText(t){
+    if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
+    return new Promise(function(res,rej){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();try{document.execCommand('copy')?res():rej();}catch(e){rej(e);}document.body.removeChild(ta);});
+  }
+  document.querySelectorAll('.block').forEach(function(b){
+    var btn=b.querySelector('.copy'),pre=b.querySelector('pre');if(!btn||!pre)return;
+    btn.addEventListener('click',function(){copyText(pre.textContent.replace(/\n+$/,'')).then(function(){
+      btn.textContent='Copied';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied');},1500);
+    },function(){btn.textContent='Select and copy';});});
+  });
+  // step ticks + progress
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  var done=load('done',{});
+  var ptext=document.querySelector('.ptext'),dots=document.querySelector('.progress');
+  var core=steps.filter(function(s){return !s.classList.contains('stretch');});
+  var links=steps.map(function(s){var a=document.createElement('a');a.href='#'+s.id;a.title=s.querySelector('h3').textContent;
+    if(s.classList.contains('stretch'))a.className='stretch';dots.insertBefore(a,ptext);return a;});
+  function paint(){
+    var n=0;steps.forEach(function(s,i){var on=!!done[s.id];s.classList.toggle('done',on);s.querySelector('.donebox input').checked=on;
+      links[i].classList.toggle('on',on);if(on&&!s.classList.contains('stretch'))n++;});
+    ptext.textContent=n+' of '+core.length+' done';
+  }
+  steps.forEach(function(s){s.querySelector('.donebox input').addEventListener('change',function(e){done[s.id]=e.target.checked;save('done',done);paint();});});
+  paint();
+  // note fields
+  document.querySelectorAll('[data-note]').forEach(function(inp){var k='note:'+inp.getAttribute('data-note');inp.value=load(k,'');
+    inp.addEventListener('input',function(){save(k,inp.value);});});
+  // reset
+  var r=document.querySelector('.reset');if(r)r.addEventListener('click',function(){
+    if(!confirm('Clear your ticks and notes on this page?'))return;
+    try{Object.keys(localStorage).forEach(function(k){if(k.indexOf(KEY+':')===0)localStorage.removeItem(k);});}catch(e){}
+    done={};document.querySelectorAll('[data-note]').forEach(function(i){i.value='';});paint();});
+})();
+</script></body></html>
