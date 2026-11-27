@@ -2,7 +2,7 @@
 
 Part 1 - run the same prompt three times and watch the answer change.
 Part 2 - turn the one knob you do get on this model, `effort`, on a question
-         that takes a few steps, and watch thinking tokens, seconds and the answer.
+         (a tea-stall bill), and watch thinking tokens, seconds and the answer.
 """
 import time
 
@@ -48,9 +48,8 @@ if __name__ == "__main__":
 
     print("### Part 2 - same question, three effort levels. Watch thinking tokens and seconds.\n")
     question = (
-        "A web service gets 1,200 requests a minute at 09:00. Every hour, traffic is 15% "
-        "higher than the hour before. One server handles 500 requests a minute. "
-        "How many servers are needed at 13:00? Answer in one line."
+        "At a tea stall, tea costs Rs 15 and coffee costs Rs 25. A group bought 13 drinks "
+        "and paid Rs 245. How many coffees did they buy? Answer in one line."
     )
     for effort in ("low", "medium", "high"):
         answer, message, seconds = ask(question, effort=effort)
