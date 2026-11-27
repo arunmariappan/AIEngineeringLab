@@ -8,7 +8,7 @@ Model: `claude-haiku-5-5` · Session 1 · Saturday 28 November 2026, 10:00–13:
 3. **Never programmed before?** Then `exercises/python-basics.html`, *Python from zero*: twelve short lessons, one small file each in `python_basics/`. No key needed. Lessons 1–7 before Saturday if you can; the rest before Week 2.
 4. Already cloned the repo at the intro? Get the latest files first: `git pull`.
 
-Your class key comes on a printed slip at **09:30 on Saturday**. Copy `.env.example` to `.env` (`copy .env.example .env` on Windows, `cp .env.example .env` on macOS) and paste it in. Never commit it or post it in a chat.
+Copy `.env.example` to `.env` (`copy .env.example .env` on Windows, `cp .env.example .env` on macOS). Your own class key arrives in a **private WhatsApp message at 09:30 on Saturday**: paste it into `.env`, then delete the message. Never commit it or post it in a chat.
 
 ## Saturday's labs, in order
 Every lab runs the same way: **run it → read it → change it → extend it**. The lines to change are marked `# CHANGE ME`.
