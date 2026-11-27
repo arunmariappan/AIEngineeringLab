@@ -1,4 +1,4 @@
-"""Demo: the model remembers nothing between calls (slide 21, about 60 seconds).
+"""Demo: the model remembers nothing between calls (slide 24, about 60 seconds).
 
 Call 1 tells it a name. Call 2 asks for the name WITHOUT sending call 1.
 Call 3 asks again, this time sending the whole conversation so far.

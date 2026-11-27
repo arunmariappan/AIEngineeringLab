@@ -21,7 +21,7 @@ Every lab runs the same way: **run it → read it → change it → extend it**.
 | 12:10 | `lab3_prompt_as_spec.py` | Your prompt as a versioned file you can `git diff` |
 | 12:34 | `specs/triage_cli.md` | Live demo: spec first, then an AI coding agent builds it. You do it at home |
 | stretch | `stretch_compare_models.py` | Haiku 5.5 vs Sonnet 5.5: is 20× the price 20× better? |
-| demo (slide 21) | `demo_memory.py` | The model forgets: the same question without and with the conversation history |
+| demo (slide 24) | `demo_memory.py` | The model forgets: the same question without and with the conversation history |
 
 `uv run lab1_first_call.py` sets everything up on the first run. No uv? `python -m venv .venv`, activate it, `pip install -r requirements.txt`, then `python lab1_first_call.py`.
 
